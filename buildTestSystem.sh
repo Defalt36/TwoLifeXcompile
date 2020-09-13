@@ -2,8 +2,8 @@
 
 echo "This script was made to be run in wsl, some parts of it won't work on a pure linux enviroment."
 echo
-echo "Warning: Make sure you are running wsl with administrator privileges before proceeding."
-echo "Cancel with ctrl+c. Proceed with enter."
+echo "This script will not create the symlinks if you are not running wsl with administrator privileges."
+echo "In that case, remember to run the batch files that generate the symlinks or create them yourself, otherwise neither the server nor editor will run properly."
 
 read userIn
 
