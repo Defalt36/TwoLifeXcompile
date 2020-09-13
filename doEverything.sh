@@ -25,8 +25,8 @@ cd TwoLifeXcompile
 ./getMingw-w64.sh
 ./installMissingLibraries.sh
 ./getSDLforWin.sh
+./removeAndCloneAgain.sh
 ./fixStuff.sh
 ./applyLocalRequirements.sh
 ./buildTestSystem.sh
 ./compileForWindowsWithoutEOLChanges.sh
-
