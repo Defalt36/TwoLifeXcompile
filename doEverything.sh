@@ -11,7 +11,7 @@ cdir="${PWD: -8}"
 if [ "$cdir" = "Xcompile" ]
 then
 	echo
-	echo "Don't run this from TwoLifeXcompile repository. This is meant to be executed in your workdir"
+	echo "Don't run this from TwoLifeXcompile repository. This is meant to be executed in your workdir."
 	exit
 fi
 
