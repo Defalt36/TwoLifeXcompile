@@ -1,5 +1,15 @@
 cd ../OneLife/build
 
-NOW=$(date '+%y%m%d%H%M%S')
+NOW=$(date '+(%F,%H%M)')
 ./compileAndPackWindows.sh "$NOW"
-mv "windows/OneLife_v$NOW" "../../"
+
+cd ../../
+
+if [ ! -e windows_builds ]
+then
+	mkdir windows_builds
+fi
+
+mv "OneLife/build/windows_builds/2hol_$NOW" "windows_builds/"
+rmdir --ignore-fail-on-non-empty OneLife/build/windows_builds
+

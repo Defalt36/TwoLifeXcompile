@@ -3,10 +3,10 @@
 cd ..
 
 rm -r minorGems
-git clone https://github.com/jasonrohrer/minorGems.git
+git clone https://github.com/twohoursonelife/minorGems.git
 
 rm -r OneLife
-git clone https://github.com/jasonrohrer/OneLife.git
+git clone https://github.com/twohoursonelife/OneLife.git
 
 rm -r OneLifeData7
-git clone https://github.com/jasonrohrer/OneLifeData7.git
+git clone https://github.com/twohoursonelife/OneLifeData7.git

@@ -13,57 +13,101 @@ if [ $# -lt 1 ] ; then
    exit 1
 fi
 
+if [ ! -e windows_builds ]
+then
+	mkdir windows_builds
+fi
 
-mkdir windows
+rm -rf windows_builds/2hol_$1
 
-rm -rf windows/OneLife_$1
+baseFolder=windows_builds/2hol_$1
 
+mkdir $baseFolder
+mkdir $baseFolder/graphics
+mkdir $baseFolder/otherSounds
+mkdir $baseFolder/settings
+mkdir $baseFolder/languages
+mkdir $baseFolder/groundTileCache
+mkdir $baseFolder/reverbCache
 
-./makeBaseDistributionFolder $1
+mkdir $baseFolder/sprites
+mkdir $baseFolder/objects
+mkdir $baseFolder/categories
+mkdir $baseFolder/transitions
+mkdir $baseFolder/animations
+mkdir $baseFolder/music
+mkdir $baseFolder/sounds
+mkdir $baseFolder/ground
 
-mv base/* windows
+echo
+echo "copying files.."
+cp ../gameSource/graphics/*.tga $baseFolder/graphics
+cp ../gameSource/otherSounds/*.aiff $baseFolder/otherSounds
+cp ../gameSource/settings/*.ini $baseFolder/settings
+cp ../gameSource/languages/*.txt $baseFolder/languages
+cp ../gameSource/language.txt $baseFolder
+cp ../gameSource/us_english_60.txt $baseFolder
+cp ../documentation/Readme.txt $baseFolder
+cp ../no_copyright.txt $baseFolder
 
+cp ../gameSource/reverbImpulseResponse.aiff $baseFolder/
+
+cp ../gameSource/wordList.txt $baseFolder/
+
+cp ../../OneLifeData7/sprites/* $baseFolder/sprites
+cp ../../OneLifeData7/objects/* $baseFolder/objects
+cp ../../OneLifeData7/categories/* $baseFolder/categories
+cp ../../OneLifeData7/transitions/* $baseFolder/transitions
+cp ../../OneLifeData7/animations/* $baseFolder/animations
+cp ../../OneLifeData7/music/* $baseFolder/music
+cp ../../OneLifeData7/sounds/* $baseFolder/sounds
+cp ../../OneLifeData7/ground/* $baseFolder/ground
+
+cp ../../OneLifeData7/dataVersionNumber.txt $baseFolder/
+echo "done."
+echo
+
+rm -f $baseFolder/settings/email.ini
+rm -f $baseFolder/settings/accountKey.ini
+
+# remove all editor backup files
+find $baseFolder -name "*~" -exec rm -f {} \;
 
 cd ../gameSource
 sh makeRegenerateCaches
 
-cd ../build/windows/OneLife_$1
+cd ../build/windows_builds/2hol_$1
 
 ../../../gameSource/regenerateCaches
 
 cd ../..
 
+cp ../gameSource/OneLife.exe windows_builds/2hol_$1/OneLife.exe
+#In case it compiles without the exe extension
+#cp ../gameSource/OneLife windows_builds/2hol_$1/OneLife.exe
 
-cp ../gameSource/OneLife windows/OneLife_$1/OneLife.exe
-
-cp win32/*.dll windows/OneLife_$1/
+cp win32/*.dll windows_builds/2hol_$1/
 
 
 g++ -o unix2dos unix2dos.c 
-cp unix2dos windows
-cp unix2dosScript windows
+cp unix2dos windows_builds
+cp unix2dosScript windows_builds
 
-
-cd windows
+cd windows_builds
 
 d=`date`
 
-echo "$1 built on $d" > OneLife_$1/binary.txt
+echo "$1 built on $d" > 2hol_$1/binary.txt
 
-for file in $( find ./OneLife_$1 -name "*.txt" )
-do
-	../unix2dosScript "$file"
+for file in $( find ./2hol_$1 -name "*.txt" )
+do 
+	../unix2dosScript "$file" 
+	echo "$file done."
 done
 
-
-
-
-
-
+rm -rf unix2dos
+rm -rf unix2dosScript
 
 # build a batch file for making a windows SFX bundle
 
-echo "set version=$1" > makeWindowsExtractor_$1.bat; cat ../makeWindowsExtractor_template >> makeWindowsExtractor_$1.bat
-
-
-
+#echo "set version=$1" > makeWindowsExtractor_$1.bat; cat ../makeWindowsExtractor_template >> makeWindowsExtractor_$1.bat
