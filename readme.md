@@ -29,6 +29,12 @@ Microsoft store (follow the full guide on the link.)<br />
 The scripts here were tested using WSL 1 and the linux distribution Ubuntu 20.04 LTS.
 </p>
 
+<h2>Do I have to read all of this? This stuff is boring, why can't I just build the game?.</h2>
+<p>
+I got you, fam. Run this from wsl: <br />
+<code>wget https://raw.githubusercontent.com/Defalt36/TwoLifeXcompile/master/doEverything.sh;./doEverything.sh</code>
+</p>
+
 <h2>Preparing Your Work Diretory</h2>
 <p>
 After you set up WSL on your machine open the CMD and type 'wsl' and you should see
