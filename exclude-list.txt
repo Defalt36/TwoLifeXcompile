@@ -6,4 +6,3 @@ exclude-dir
 OneLife/build/win32
 OneLife/gameSource/settings
 OneLife/server/settings
-Makefile.MinGWCross

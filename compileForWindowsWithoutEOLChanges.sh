@@ -58,6 +58,7 @@ mkdir -p $outputFolder/groundTileCache
 
 echo
 echo "Copying items from build into directories"
+
 cp OneLife/gameSource/OneLife.exe $outputFolder/ #exe extension
 cp OneLife/documentation/Readme.txt $outputFolder/
 cp OneLife/no_copyright.txt $outputFolder/
@@ -72,7 +73,7 @@ cp OneLife/gameSource/wordList.txt $outputFolder/
 
 echo
 echo "Moving build folder."
-mv $outputFolder windows_builds
+mv $outputFolder windows_builds/
 
 echo
 echo "Done."

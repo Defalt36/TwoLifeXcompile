@@ -2,11 +2,11 @@
 
 cd ..
 
-rm -r minorGems
+rm -rf minorGems
 git clone https://github.com/twohoursonelife/minorGems.git
 
-rm -r OneLife
+rm -rf OneLife
 git clone https://github.com/twohoursonelife/OneLife.git
 
-rm -r OneLifeData7
+rm -rf OneLifeData7
 git clone https://github.com/twohoursonelife/OneLifeData7.git
