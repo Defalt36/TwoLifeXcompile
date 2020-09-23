@@ -22,9 +22,9 @@ git clone https://github.com/Defalt36/TwoLifeXcompile.git
 cd TwoLifeXcompile
 
 ./getBasics.sh
-./getMingw-w64.sh
+./installMingw.sh
 ./installMissingLibraries.sh
-./getSDLforWin.sh
+./getSDLforMingw.sh
 ./removeAndCloneAgain.sh
 ./fixStuff.sh
 ./applyLocalRequirements.sh

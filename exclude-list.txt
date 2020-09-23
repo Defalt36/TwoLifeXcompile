@@ -1,6 +1,7 @@
 exclude-dir
 /*.sh
 /*.txt
+readme.md
 .git
 .git/
 OneLife/build/win32

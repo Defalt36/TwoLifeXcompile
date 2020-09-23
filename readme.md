@@ -87,7 +87,7 @@ First open TwoLifeXcompile folder. You can open it from your work directory usin
 
 Then run:<br />
 <code>./getBasics.sh</code><br />
-<code>./getMingw-w64.sh</code><br />
+<code>./installMingw.sh</code><br />
 
 If you want to be able to build the editor, run:<br />
 <code>./installMissingLibraries.sh</code><br />
@@ -103,7 +103,7 @@ previously cloned (if any).<br />
 
 <p>
 After successfully cloning the game repositories to your work directory run:<br />
-<code>./getSDLforWin.sh</code><br />
+<code>./getSDLforMingw.sh</code><br />
 <code>./fixStuff.sh</code><br />
 <code>./applyLocalRequirements.sh</code><br />
 </p>
@@ -136,7 +136,7 @@ The second will do basically the same as the first but it is much faster. The re
 for this is that it does not convert the unix-style line endings to windows-style. It
 doesn't seem to cause any major problems.<br />
 
-Now for the third. This on is very similar to pullAndBuildTestSystem.sh from the game
+Now for the third. This one is very similar to pullAndBuildTestSystem.sh from the game
 scripts, in fact it is derived from it. It will clone the game repositories if they are
 missing and compile the game, editor and server for you, modifing some files so it will
 be ready to be used for testing. Be warned you will be editing the repositories files
@@ -146,9 +146,16 @@ when you use the editor. You may want to make a backup of the OneLifeData7 repos
 <h2>Ok, But What Does All This Stuff Actually Do?</h2>
 
 <p>
-Most scripts here keep the same function as the original ones. You can read about what
+Most forked scripts keep the same function as the original ones, and others were renamed. You can read about what
 they do in this tutorial:
 https://onehouronelife.com/forums/viewtopic.php?id=1438
+</p>
+
+<p>
+<code>exclude-list.txt</code><br />
+When you run ./applyLocalRequirements.sh some files from TwoLifeXcompile will be copied to
+the game folders with the sole exception being the files listed here. The folder exclude-dir
+and some files you may need are included for your convenience.
 </p>
 
 <p>
@@ -165,16 +172,20 @@ at your compiler for it to work. This script install the ones you need.
 </p>
 
 <p>
-<code>resetServer.sh</code><br />
+<code>deleteAllServerFiles.sh</code><br />
 Forget to press control-c when exiting the server or you just want a fresh map? This script
 will send all your server files to oblivion.
 </p>
 
 <p>
-<code>exclude-list.txt</code><br />
-When you run ./applyLocalRequirements.sh some files from TwoLifeXcompile will be copied to
-the game folders with the sole exception being the files listed here. The folder exclude-dir
-and some files you may need are included for your convenience.
+<code>cleanServerMap.sh</code><br />
+Less destructive version of the above.
+</p>
+
+<p>
+<code>doEverything.sh</code><br />
+Will install, download and run everything you need, then it will
+build the game, editor and server. This should be run at your workdir.
 </p>
 
 <h2>Note About Missing DLLs</h2>

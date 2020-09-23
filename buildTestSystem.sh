@@ -1,27 +1,28 @@
 #!/bin/sh
 
 echo "This script was made to be run in wsl, some parts of it won't work on a pure linux enviroment."
-echo
-echo "This script will not create the symlinks if you are not running wsl with administrator privileges."
-echo "In that case, remember to run the batch files that generate the symlinks or create them yourself, otherwise neither the server nor editor will run properly."
 
-read userIn
+#read userIn
+
+if [ ! -e ../minorGems ]
+then
+	git clone https://github.com/twohoursonelife/minorGems.git ../minorGems
+fi
+
+if [ ! -e ../OneLife ]
+then
+	git clone ../https://github.com/twohoursonelife/OneLife.git ../OneLife
+fi
+
+if [ ! -e ../OneLifeData7 ]
+then
+	git clone https://github.com/twohoursonelife/OneLifeData7.git ../OneLifeData7
+fi
+
+./applyLocalRequirements.sh
+./fixStuff.sh
 
 cd ..
-if [ ! -e minorGems ]
-then
-	git clone https://github.com/twohoursonelife/minorGems.git	
-fi
-
-if [ ! -e OneLife ]
-then
-	git clone https://github.com/twohoursonelife/OneLife.git
-fi
-
-if [ ! -e OneLifeData7 ]
-then
-	git clone https://github.com/twohoursonelife/OneLifeData7.git	
-fi
 
 cd OneLifeData7
 
@@ -37,6 +38,7 @@ cd gameSource
 echo
 echo "Building game..."
 make
+echo "done compiling."
 
 echo 1 > settings/useCustomServer.ini
 echo localhost > settings/CustomServerAddress.ini
@@ -45,8 +47,8 @@ echo 8005 > settings/customServerPort.ini
 echo
 echo "Building editor..."
 sh ./makeEditor.sh
+echo "done compiling."
 
-#This won't work if you didn't open wsl from a cmd with administrator privileges
 echo
 cmd.exe /c createSymlinksForEditor.bat
 
@@ -55,8 +57,8 @@ cd ../server
 echo
 echo "Building server..."
 make
+echo "done compiling."
 
-#This won't work if you didn't open wsl from a cmd with administrator privileges
 echo
 cmd.exe /c createSymlinksForServer.bat
 

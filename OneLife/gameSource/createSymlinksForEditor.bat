@@ -12,4 +12,4 @@ mklink /D scenes ..\..\OneLifeData7\scenes
 mklink /D sounds ..\..\OneLifeData7\sounds
 mklink /D sprites ..\..\OneLifeData7\sprites
 mklink /D transitions ..\..\OneLifeData7\transitions
-mklink dataVersionNumber.txt ..\..\OneLifeData7\dataVersionNumber.txt
+mklink /H dataVersionNumber.txt ..\..\OneLifeData7\dataVersionNumber.txt

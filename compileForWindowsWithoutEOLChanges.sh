@@ -6,7 +6,7 @@ set -e
 
 cd ..
 NOW=$(date '+(%F,%H%M)')
-outputFolder="2hol_$(date '+(%dth,%h-%H:%M)')-nocnv"
+outputFolder="2hol_$NOW-nocnv"
 mkdir $outputFolder
 cd $outputFolder
 
@@ -28,9 +28,6 @@ cp ../OneLife/build/win32/SDL.dll .
 #Remove caches
 rm -f */*.fcz
 
-
-
-
 cd ..
 
 
@@ -44,6 +41,7 @@ cd gameSource
 echo
 echo "Building OneLife..."
 make || exit 1
+echo "done compiling."
 
 cd ../..
 
@@ -71,8 +69,15 @@ cp OneLife/gameSource/us_english_60.txt $outputFolder/
 cp OneLife/gameSource/reverbImpulseResponse.aiff $outputFolder/
 cp OneLife/gameSource/wordList.txt $outputFolder/
 
+if [ ! -e windows_builds ]
+then
+	mkdir windows_builds
+fi
+
 echo
 echo "Moving build folder."
+
+rm -rf windows_builds/$outputFolder
 mv $outputFolder windows_builds/
 
 echo
@@ -82,6 +87,7 @@ echo "Done."
 cd windows_builds/$outputFolder
 # cmd.exe /c OneLife.exe
 
+echo "You shall find the compiled game at 'wherever your workdir'/windows_builds"
 
 
 
