@@ -1,8 +1,7 @@
 #!/bin/sh
 
 echo "This script was made to be run in wsl, some parts of it won't work on a pure linux enviroment."
-
-#read userIn
+echo "If you are not running wsl from and elevated command prompt you may have to create the symlinks manually."
 
 if [ ! -e ../minorGems ]
 then
