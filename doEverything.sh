@@ -29,4 +29,4 @@ cd TwoLifeXcompile
 ./fixStuff.sh
 ./applyLocalRequirements.sh
 ./buildTestSystem.sh
-./compileForWindowsWithoutEOLChanges.sh
+./compileWithoutEOLChanges.sh

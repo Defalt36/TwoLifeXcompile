@@ -123,7 +123,7 @@ do this.
 <p>
 <ol>
 <li><code>./compileAndMove.sh</code></li>
-<li><code>./compileForWindowsWithoutEOLChanges.sh</code></li>
+<li><code>./compileWithoutEOLChanges.sh</code></li>
 <li><code>./buildTestSystem.sh</code></li>
 </ol>
 </p>
