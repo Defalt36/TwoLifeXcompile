@@ -1,0 +1,9 @@
+
+del 2HOL_%version%_Windows.zip 
+del 2HOL_%version%_Windows.exe
+
+7z a -tzip 2HOL_%version%_Windows.zip 2HOL_%version%
+
+makesfx.exe /zip="2HOL_%version%_Windows.zip" /sfx="2HOL_%version%_Windows.exe" /title="Two Hours One Life %version%" /website="https://twohoursonelife.com" /intro="This will extract the game." /defaultpath="$curdir$" /icon="..\win32\icon_installer.ico"
+
+pause

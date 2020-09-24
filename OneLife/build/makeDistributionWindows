@@ -18,9 +18,9 @@ then
 	mkdir windows_builds
 fi
 
-rm -rf windows_builds/2hol_$1
+rm -rf windows_builds/2HOL_$1
 
-baseFolder=windows_builds/2hol_$1
+baseFolder=windows_builds/2HOL_$1
 
 mkdir $baseFolder
 mkdir $baseFolder/graphics
@@ -76,17 +76,17 @@ find $baseFolder -name "*~" -exec rm -f {} \;
 cd ../gameSource
 sh makeRegenerateCaches
 
-cd ../build/windows_builds/2hol_$1
+cd ../build/windows_builds/2HOL_$1
 
 ../../../gameSource/regenerateCaches
 
 cd ../..
 
-cp ../gameSource/OneLife.exe windows_builds/2hol_$1/OneLife.exe
+cp ../gameSource/OneLife.exe windows_builds/2HOL_$1/OneLife.exe
 #In case it compiles without the exe extension
-#cp ../gameSource/OneLife windows_builds/2hol_$1/OneLife.exe
+#cp ../gameSource/OneLife windows_builds/2HOL_$1/OneLife.exe
 
-cp win32/*.dll windows_builds/2hol_$1/
+cp win32/*.dll windows_builds/2HOL_$1/
 
 
 g++ -o unix2dos unix2dos.c 
@@ -97,9 +97,9 @@ cd windows_builds
 
 d=`date`
 
-echo "$1 built on $d" > 2hol_$1/binary.txt
+echo "$1 built on $d" > 2HOL_$1/binary.txt
 
-for file in $( find ./2hol_$1 -name "*.txt" )
+for file in $( find ./2HOL_$1 -name "*.txt" )
 do 
 	../unix2dosScript "$file" 
 	echo "$file done."

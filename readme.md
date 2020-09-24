@@ -12,21 +12,19 @@ to the game Two Hours One Life.
 <p>
 Windows Subsystem for Linux (WSL) was the main tool used for testing of the scripts
 in this repository. Other tools such as Virtual box may be able to make use of the
-scripts here, but have in mind it might not work.
+scripts here, but have in mind it might not work. WSL 2 was not tested.
 </p>
 
 <p>
 You can see a guide on how to activate WSL on Windows 10 here:<br />
-<a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">https://docs.microsoft.com/en-us/windows/wsl/install-win10</a>
+<a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">WSL Installation Guide for Windows 10</a>
 </p>
 
 <p>
-After this, you should restart your machine and install a linux distribution from the
-Microsoft store (follow the full guide on the link.)<br />
-</p>
-
-<p>
-The scripts here were tested using WSL 1 and the linux distribution Ubuntu 20.04 LTS.
+If your in a hurry enter the folder exclude-dir in this repository and then run the batch file
+'activateWSLthenRestart.bat' as an administrator. Be warned it will restart your machine.<br />
+After you computer reboots install<a href="https://www.microsoft.com/store/apps/9n6svws3rx71">Ubuntu 20.04 LTS</a> from the Microsoft
+store. Open it and define a user and password.<br />
 </p>
 
 <h2>Do I have to read all of this? This stuff is boring, why can't I just build the game?</h2>
@@ -35,42 +33,36 @@ I got you, fam. Run this from wsl: <br />
 <code>wget https://raw.githubusercontent.com/Defalt36/TwoLifeXcompile/master/doEverything.sh;./doEverything.sh</code>
 </p>
 
-<h2>Preparing Your Work Diretory</h2>
+<h2>Preparing Your Work Directory</h2>
 <p>
 After you set up WSL on your machine open the CMD and type 'wsl' and you should see
-the terminal of your linux distribution.
+the terminal of your linux distribution. Alternatively you can run 'openTerminalHere.bat'
+from the repository files.
 </p>
 
 <p>
-Now use the command 'cd' to navigate to the folder you want to place your files. In
-my case I use '<code>cd /mnt/c/Users/defalt/Desktop</code>' to go to my desktop and then I create
-the folder 'workdir' either by inputing '<code>mkdir workdir</code>' on the terminal or just
-create the folder using Windows Explorer.<br />
+If you don't already have a work directory create a folder and name it 'workdir', then move
+the 'TwoLifeXcompile' repository to it or proceed to get instructions on how to acquire it.
+</p>
 
-Note my desktop is located at the 'C' drive, or '/mnt/c' in WSL. If the folder you
-want to open is in another drive, for example 'D' you will have to open '/mnt/d'
-instead.
+
+<p>
+To download the repository directly to your workdir first open WSL from CMD. Then use the
+command 'cd' to navigate to the folder you want to place your files. In
+my case I use '<code>cd /mnt/c/Users/defalt/Desktop/workdir</code>' as that is where my workdir
+is located. '/mnt/c' is the corresponding path of C: on WSL.<br />
+
+Now run '<code>sudo apt-get install git</code>', wait for it to complete and then run
+'<code>git clone https://github.com/Defalt36/TwoLifeXcompile.git</code>'.
+After the command completes, check to see if 'TwoLifeXcompile' was cloned into the right folder.
 </p>
 
 <p>
-Now I just open my work directory with '<code>cd workdir</code>'. You should also open your
-directory. Check the end of the terminal line to see if you are in the correct folder.
-For me it is: <br />
-<code>defalt@DEFALT-PC:/mnt/c/Users/defalt/Desktop/workdir</code><br />
-
-Alternatively instead of just opening your work directory you can run:<br />
+For convenience you can type:<br />
 <code>ln -s "The path to your work directory" ~/workdir</code><br />
 
 This create a shortcut that will let you find you work directory easily using:<br />
 <code>cd ~/workdir</code>
-</p>
-
-<p>
-Now run '<code>sudo apt-get install git</code>'<br />
-This will install git, so we can clone this repository.<br />
-
-Then run '<code>git clone https://github.com/Defalt36/TwoLifeXcompile.git</code>'<br />
-It should create a clone of this into your workdir.
 </p>
 
 <h2>Preparing Your Enviroment</h2>
@@ -82,14 +74,17 @@ use another distribution.
 </p>
 
 <p>
-First open TwoLifeXcompile folder. You can open it from your work directory using:<br />
-<code>cd TwoLifeXcompile</code><br />
+Make sure you have the correct folder opened in the terminal. Check the end of the line
+to see if you are in the TwoLifeXcompile folder.
+For me it is: <br />
+<code>defalt@DEFALT-PC:/mnt/c/Users/defalt/Desktop/workdir/TwoLifeXcompile</code><br />
+</p>
 
-Then run:<br />
+Run:<br />
 <code>./getBasics.sh</code><br />
 <code>./installMingw.sh</code><br />
 
-If you want to be able to build the editor, run:<br />
+Run this if you want to be able to build the editor:<br />
 <code>./installMissingLibraries.sh</code><br />
 </p>
 
@@ -116,8 +111,8 @@ the files generated from previously builds.<br />
 </p>
 
 <p>
-Now you are ready for compiling the game. You have currently three options on how to
-do this.
+Now you are ready for compiling the game. You have currently four options on how to
+do this from the repository.
 </p>
 
 <p>
@@ -129,18 +124,29 @@ do this.
 </p>
 
 <p>
-The first will compile the game using the scripts that were copied to OneLife/build,
+'compileAndMove.sh' will compile the game using the scripts that were copied to OneLife/build,
 and then move the game to the folder windows_builds in your work directory.<br />
 
-The second will do basically the same as the first but it is much faster. The reason
-for this is that it does not convert the unix-style line endings to windows-style. It
+'compileWithoutEOLChanges.sh' will do basically the same as the first but it is much faster. The
+reason for this is that it does not convert the unix-style line endings to windows-style. It
 doesn't seem to cause any major problems.<br />
 
-Now for the third. This one is very similar to pullAndBuildTestSystem.sh from the game
-scripts, in fact it is derived from it. It will clone the game repositories if they are
-missing and compile the game, editor and server for you, modifing some files so it will
-be ready to be used for testing. Be warned you will be editing the repositories files
-when you use the editor. You may want to make a backup of the OneLifeData7 repository.
+'buildTestSystem.sh' is very similar to pullAndBuildTestSystem.sh from the game scripts, in
+fact it is derived from it. It will clone the game repositories if they are missing and compile
+the game, editor and server for you, modifing some files so it will be ready to be used for
+testing. Be warned you will be editing the repositories files when you use the editor. You may
+want to make a backup of the OneLifeData7 repository.
+
+
+</p>
+
+<h2>Building From Another Source</h2>
+
+<p>
+You can run './removeAndCloneFrom.sh' to clone from the game repositories under any name from
+any user. This is useful for cloning your own repositories, but you can also clone the original
+repositories for example.<br />
+The compile script recomended when building from other sources is 'buildTestSystem.sh'.
 </p>
 
 <h2>Ok, But What Does All This Stuff Actually Do?</h2>
@@ -155,7 +161,7 @@ https://onehouronelife.com/forums/viewtopic.php?id=1438
 <code>exclude-list.txt</code><br />
 When you run ./applyLocalRequirements.sh some files from TwoLifeXcompile will be copied to
 the game folders with the sole exception being the files listed here. The folder exclude-dir
-and some files you may need are included for your convenience.
+and some files you may use are included for your convenience.
 </p>
 
 <p>
@@ -166,9 +172,22 @@ system, but if you want to keep it simple, just run it.
 </p>
 
 <p>
+<code>removeAndCloneFrom.sh</code><br />
+Used for cloning from other repositories.
+</p>
+
+<p>
 <code>installMissingLibraries.sh</code><br />
 You may have a lot of libraries in your system, but it seems you have to have them installed
 at your compiler for it to work. This script install the ones you need.
+</p>
+
+<p>
+<code>installMissingLibraries.sh --sdlonly</code><br />
+Experimental.
+This will install sdl in your distribution instead.
+You will have to replace some files from the repository folder minorGems/game/plataforms/SDL
+with their counterparts in exclude-dir.
 </p>
 
 <p>
@@ -180,6 +199,18 @@ will send all your server files to oblivion.
 <p>
 <code>cleanServerMap.sh</code><br />
 Less destructive version of the above.
+</p>
+
+<p>
+<code>pullAndBuildLatestWindows.sh</code><br />
+Will automatically build the lastest version of Two Hours One Life for you. Make sure to
+get SDL before running.
+</p>
+
+<p>
+<code>./buildTestSystem.sh</code><br />
+Build a test system for experimenting with the game. As the preceding you need SDL before
+running this.
 </p>
 
 <p>
@@ -198,5 +229,5 @@ If you experience that problem, just copy the dlls from 'OneLife/build/win32' fr
 repository to the same folder as the exe requiring these files.<br />
 
 Removing the "OneLife/build/win32" line from 'exclude-list.txt' should include
-these files in '2hol_(x)' the next time you compile the game.
+these files in '2hol_(x)' the next time you compile the game (now default).
 </p>

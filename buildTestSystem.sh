@@ -1,8 +1,9 @@
 #!/bin/sh
 
 echo "This script was made to be run in wsl, some parts of it won't work on a pure linux enviroment."
-
-#read userIn
+echo "You may have to create the symlinks manually if you are not running wsl with admistrator privileges."
+echo
+sleep 3
 
 if [ ! -e ../minorGems ]
 then
@@ -11,7 +12,7 @@ fi
 
 if [ ! -e ../OneLife ]
 then
-	git clone ../https://github.com/twohoursonelife/OneLife.git ../OneLife
+	git clone https://github.com/twohoursonelife/OneLife.git ../OneLife
 fi
 
 if [ ! -e ../OneLifeData7 ]
@@ -51,6 +52,8 @@ echo "done compiling."
 
 echo
 cmd.exe /c createSymlinksForEditor.bat
+
+cp ../build/win32/*.dll .
 
 cd ../server
 ./configure 5

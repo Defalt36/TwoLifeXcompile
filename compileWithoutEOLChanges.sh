@@ -6,7 +6,7 @@ set -e
 
 cd ..
 NOW=$(date '+(%F,%H%M)')
-outputFolder="2hol_$NOW-nocnv"
+outputFolder="2HOL_$NOW-nocnv"
 mkdir $outputFolder
 cd $outputFolder
 
