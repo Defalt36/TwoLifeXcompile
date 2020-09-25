@@ -4,16 +4,15 @@ defaultUser="twohoursonelife"
 
 cd ..
 
-read -p "remove existing now? " removeNow
-if [ "$removeNow" = "yes" ]
-then
-	rm -rf OneLifeData7
-	rm -rf minorGems
-	rm -rf OneLife
-	echo "Folders removed."
-else
-	echo "Not removed."
-fi
+echo
+echo "Remove existing repositories now? "
+
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) rm -rf OneLifeData7; rm -rf minorGems; rm -rf OneLife; echo "Folders removed."; break;;
+        No ) echo "Not removed."; break;;
+    esac
+done
 
 echo
 echo "Write anything to override all users. Press enter to continue."
@@ -22,35 +21,71 @@ read soloUserN
 if [ -z "$soloUserN" ]
 then
 	echo "Enter github users to clone from. (let blank for default user)"
-	read -p "OneLife user:" OneLifeU
-	read -p "minorGems user:" minorGemsU
-	read -p "OneLifeData7 user:" OneLifeData7U
+	read -p "OneLife user:" OLU
+	read -p "minorGems user:" MGU
+	read -p "OneLifeData7 user:" OLD7U
 else
-	OneLifeU=$soloUserN
-	minorGemsU=$soloUserN
-	OneLifeData7U=$soloUserN
+	OLU=$soloUserN
+	MGU=$soloUserN
+	OLD7U=$soloUserN
 fi
 
-if [ -z "$OneLifeU" ]; then OneLifeU=$defaultUser; fi
-if [ -z "$minorGemsU" ]; then minorGemsU=$defaultUser; fi
-if [ -z "$OneLifeData7U" ]; then OneLifeData7U=$defaultUser; fi
+if [ -z "$OLU" ]; then OLU=$defaultUser; fi
+if [ -z "$MGU" ]; then MGU=$defaultUser; fi
+if [ -z "$OLD7U" ]; then OLD7U=$defaultUser; fi
 
 echo
-echo "Enter repository variation name (let blank for default)."
-read -p "$OneLifeU's OneLife repository name:" OneLifeN
-read -p "$minorGemsU's minorGems repository name:" minorGemsN
-read -p "$OneLifeData7U's OneLifeData7 repository name:" OneLifeData7N
+echo "Get repositories with different names?"
 
-if [ -z "$OneLifeN" ]; then OneLifeN="OneLife"; fi
-if [ -z "$minorGemsN" ]; then minorGemsN="minorGems"; fi
-if [ -z "$OneLifeDataN" ]; then OneLifeData7N="OneLifeData7"; fi
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) askForVarNames=true; break;;
+        No ) askForVarNames=false; echo "Assuming standard names."; break;;
+    esac
+done
+
+if $askForVarNames
+then
+	echo
+	echo "Enter the name of the repository (let blank for default)."
+	read -p "${OLU^^}'s OneLife repository name:" OLN
+	read -p "${MGU^^}'s minorGems repository name:" MGN
+	read -p "${OLD7U^^}'s OLD7 repository name:" OLD7N
+fi
+
+if [ -z "$OLN" ]; then OLN="OneLife"; fi
+if [ -z "$MGN" ]; then MGN="minorGems"; fi
+if [ -z "$OLD7N" ]; then OLD7N="OneLifeData7"; fi
 
 echo
-echo "Will clone ${OneLifeU^^}'s $OneLifeN, ${minorGemsU^^}'s $minorGemsN and ${OneLifeData7U^^}'s $OneLifeData7N."
+echo "Get different branches?"
+
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) askForBranchNames=true; break;;
+        No ) askForBranchNames=false; echo "Assuming master branches."; break;;
+    esac
+done
+
+if $askForBranchNames
+then
+	echo
+	echo "Enter alternative branch name (let blank for master)."
+	read -p "${OLU^^}'s OneLife alternative branch:" OLB
+	read -p "${MGU^^}'s minorGems alternative branch:" MGB
+	read -p "${OLD7U^^}'s OLD7 alternative branch:" OLDB
+fi
+
+if [ -z "$OLB" ]; then OLB="master"; fi
+if [ -z "$MGB" ]; then MGB="master"; fi
+if [ -z "$OLD7B" ]; then OLD7B="master"; fi
+
 echo
-echo "Press enter to start or ctrl c to cancel."
+echo "Will clone ${OLU^^}'s $OLN, ${MGU^^}'s $MGN and ${OLD7U^^}'s $OLD7N."
+echo
+echo "PRESS ENTER TO START OR CTRL-C TO CANCEL."
 read userIn
 
-git clone https://github.com/$OneLifeU/$OneLifeN.git OneLife
-git clone https://github.com/$minorGemsU/$minorGemsN.git minorGems
-git clone https://github.com/$OneLifeData7U/$OneLifeData7N.git OneLifeData7
+git clone https://github.com/$OLU/$OLN.git -b $OLB --single-branch OneLife
+git clone https://github.com/$MGU/$MGN.git -b $MGB --single-branch minorGems
+git clone https://github.com/$OLD7U/$OLD7N.git -b $OLD7B --single-branch OneLifeData7
