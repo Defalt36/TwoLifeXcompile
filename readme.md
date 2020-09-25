@@ -23,7 +23,7 @@ You can see a guide on how to activate WSL on Windows 10 here:<br />
 <p>
 If your in a hurry enter the folder exclude-dir in this repository and then run the batch file
 'activateWSLthenRestart.bat' as an administrator. Be warned it will restart your machine.<br />
-After you computer reboots install<a href="https://www.microsoft.com/store/apps/9n6svws3rx71">Ubuntu 20.04 LTS</a> from the Microsoft
+After you computer reboots install <a href="https://www.microsoft.com/store/apps/9n6svws3rx71">Ubuntu 20.04 LTS</a> from the Microsoft
 store. Open it and define a user and password.<br />
 </p>
 
