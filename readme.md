@@ -27,7 +27,7 @@ After you computer reboots install <a href="https://www.microsoft.com/store/apps
 store. Open it and define a user and password.<br />
 </p>
 
-<h2>Do I have to read all of this? This stuff is boring, why can't I just build the game?</h2>
+<h2>Do I have to read all of the following? This stuff is boring, why can't I just build the game?</h2>
 <p>
 I got you, fam. Run this from wsl: <br />
 <code>wget https://raw.githubusercontent.com/Defalt36/TwoLifeXcompile/master/doEverything.sh;./doEverything.sh</code>
@@ -44,7 +44,6 @@ from the repository files.
 If you don't already have a work directory create a folder and name it 'workdir', then move
 the 'TwoLifeXcompile' repository to it or proceed to get instructions on how to acquire it.
 </p>
-
 
 <p>
 To download the repository directly to your workdir first open WSL from CMD. Then use the
@@ -91,9 +90,15 @@ Run this if you want to be able to build the editor:<br />
 <h2>Preparing The Game Files</h2>
 
 <p>
-First you will have to clone the game files. The command './removeAndCloneAgain.sh'
+First you will have to clone the game files. The command <code>./removeAndCloneAgain.sh</code>
 should do this for you, but have in mind it will delete the game repositories you
 previously cloned (if any).<br />
+</p>
+
+<p>
+Note that command will clone the minorGems, OneLife and OneLifeData7 repositories from the
+TwoHoursOneLife github account. To clone from other sources you can use:
+<code>./cloneAlternative.sh</code>. 
 </p>
 
 <p>
@@ -111,8 +116,8 @@ the files generated from previously builds.<br />
 </p>
 
 <p>
-Now you are ready for compiling the game. You have currently four options on how to
-do this from the repository.
+Now you are ready for compiling the game. You have currently four basic options on how
+to do this using the repository scripts.
 </p>
 
 <p>
@@ -131,21 +136,25 @@ and then move the game to the folder windows_builds in your work directory.<br /
 reason for this is that it does not convert the unix-style line endings to windows-style. It
 doesn't seem to cause any major problems.<br />
 
-'buildTestSystem.sh' is very similar to pullAndBuildTestSystem.sh from the game scripts, in
-fact it is derived from it. It will clone the game repositories if they are missing and compile
+'buildTestSystem.sh' is very similar to pullAndBuildTestSystem.sh from the OneLife scripts; In
+fact, it is derived from it. It will clone the game repositories if they are missing and compile
 the game, editor and server for you, modifing some files so it will be ready to be used for
 testing. Be warned you will be editing the repositories files when you use the editor. You may
 want to make a backup of the OneLifeData7 repository.
 
+'createFullBuild.sh' this last one will compile the game, server and editor and move all their
+files to a single folder in order to make a full build. If you are using this, remember to run
+the 'initiateServer.bat' file before running the server. 'resetServer.bat' is included to delete
+the server files if you are unable to run it due to a crash.
 
 </p>
 
 <h2>Building From Another Source</h2>
 
 <p>
-You can run './removeAndCloneFrom.sh' to clone from the game repositories under any name from
-any user. This is useful for cloning your own repositories, but you can also clone the original
-repositories for example.<br />
+You can run './cloneAlternative.sh' to clone from the game repositories under any name from
+any user. This is useful for cloning your own repositories. You can also clone the original game
+repositories with it if you input 'jasonrohrer' as the user you want to clone from.<br />
 The compile script recomended when building from other sources is 'buildTestSystem.sh'.
 </p>
 
@@ -153,7 +162,7 @@ The compile script recomended when building from other sources is 'buildTestSyst
 
 <p>
 Most forked scripts keep the same function as the original ones, and others were renamed. You can read about what
-they do in this tutorial:
+they do in this tutorial from the creator of the original project, Joriom:
 https://onehouronelife.com/forums/viewtopic.php?id=1438
 </p>
 
@@ -172,8 +181,8 @@ system, but if you want to keep it simple, just run it.
 </p>
 
 <p>
-<code>removeAndCloneFrom.sh</code><br />
-Used for cloning from other repositories.
+<code>cloneAlternative.sh</code><br />
+Used for cloning from other repositories, branches or users.
 </p>
 
 <p>
@@ -208,9 +217,14 @@ get SDL before running.
 </p>
 
 <p>
-<code>./buildTestSystem.sh</code><br />
-Build a test system for experimenting with the game. As the preceding you need SDL before
-running this.
+<code>buildTestSystem.sh</code><br />
+It will clone missing repositories if any and build a test system for experimenting with
+the game. As the preceding you need SDL before running this.
+</p>
+
+<p>
+<code>createFullBuild.sh</code><br />
+Build the game, editor and server and puts them in a single folder.
 </p>
 
 <p>

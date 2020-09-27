@@ -1,4 +1,21 @@
-#!/bin/sh
+#!/bin/bash
+
+onlygamebinary=false
+
+for arg in "$@"
+do
+    case $arg in
+        --gameonly)
+		onlygamebinary=true
+		shift
+        ;;
+        *)
+		echo "Unrecognised flag"
+		exit 1
+		shift
+        ;;
+    esac
+done
 
 echo "This script was made to be run in wsl, some parts of it won't work on a pure linux enviroment."
 echo "You may have to create the symlinks manually if you are not running wsl with admistrator privileges."
@@ -24,6 +41,15 @@ fi
 ./fixStuff.sh
 
 cd ..
+
+if $onlygamebinary
+then
+	cd OneLife
+	./configure 5
+	cd gameSource
+	make
+	exit
+fi
 
 cd OneLifeData7
 

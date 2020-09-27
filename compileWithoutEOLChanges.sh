@@ -2,8 +2,6 @@
 # Original by risvh
 #
 
-set -e
-
 cd ..
 NOW=$(date '+(%F,%H%M)')
 outputFolder="2HOL_$NOW-nocnv"
@@ -31,7 +29,7 @@ rm -f */*.fcz
 cd ..
 
 
-#copied from OneLife/build/source/runToBuild with path adjuectment
+#copied from OneLife/build/source/runToBuild with path adjustment
 cd OneLife
 chmod u+x ./configure
 ./configure 5 || exit 1 #5 for cross-compiling for Windows on Linux

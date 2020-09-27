@@ -35,12 +35,14 @@ if [ -z "$MGU" ]; then MGU=$defaultUser; fi
 if [ -z "$OLD7U" ]; then OLD7U=$defaultUser; fi
 
 echo
-echo "Get repositories with different names?"
+echo "Get repositories with different names or branches?"
 
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) askForVarNames=true; break;;
-        No ) askForVarNames=false; echo "Assuming standard names."; break;;
+select nyn in "Names" "Branches" "Both" "None"; do
+    case $nyn in
+        Names ) askForVarNames=true; askForBranchNames=false; break;;
+		Branches ) askForBranchNames=true; askForVarNames=false; break;;
+		Both ) askForVarNames=true; askForBranchNames=true; break;;
+        None ) askForVarNames=false; askForBranchNames=false; echo "Assuming standard names and branches."; break;;
     esac
 done
 
@@ -56,16 +58,6 @@ fi
 if [ -z "$OLN" ]; then OLN="OneLife"; fi
 if [ -z "$MGN" ]; then MGN="minorGems"; fi
 if [ -z "$OLD7N" ]; then OLD7N="OneLifeData7"; fi
-
-echo
-echo "Get different branches?"
-
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) askForBranchNames=true; break;;
-        No ) askForBranchNames=false; echo "Assuming master branches."; break;;
-    esac
-done
 
 if $askForBranchNames
 then

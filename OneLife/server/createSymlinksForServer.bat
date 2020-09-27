@@ -8,13 +8,15 @@ rmdir animations
 rmdir categories
 rmdir objects
 rmdir transitions
+rmdir tutorialMaps
 del dataVersionNumber.txt
 del testMap.txt
 
-mklink /D categories ..\..\OneLifeData7\categories
-mklink /D objects ..\..\OneLifeData7\objects
-mklink /D transitions ..\..\OneLifeData7\transitions
-mklink /D tutorialMaps ..\..\OneLifeData7\tutorialMaps
+mklink /J animations ..\animations
+mklink /J categories ..\..\OneLifeData7\categories
+mklink /J objects ..\..\OneLifeData7\objects
+mklink /J transitions ..\..\OneLifeData7\transitions
+mklink /J tutorialMaps ..\..\OneLifeData7\tutorialMaps
 mklink /H dataVersionNumber.txt ..\..\OneLifeData7\dataVersionNumber.txt
 copy sampleTestMap.txt ..\gameSource\testMap.txt
 mklink /H testMap.txt ..\gameSource\testMap.txt
