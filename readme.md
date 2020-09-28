@@ -3,8 +3,7 @@
 
 <h2>What is This?</h2>
 <p>
-This project was adapted from the original OneLifeXcompile as an attempt ~~to provide
-a simple way~~ to provide the tool for anyone to build, modify and even contribute
+This project was adapted from the original OneLifeXcompile as an attempt to provide the tool for anyone to build, modify and even contribute
 to the game Two Hours One Life.
 </p>
 
