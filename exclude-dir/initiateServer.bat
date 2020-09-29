@@ -8,6 +8,7 @@ rmdir animations
 rmdir categories
 rmdir objects
 rmdir transitions
+rmdir tutorialMaps
 del dataVersionNumber.txt
 del testMap.txt
 
