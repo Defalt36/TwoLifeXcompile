@@ -16,8 +16,3 @@ sed -i -r '/^PLATFORM_LIBPNG_FLAG =/aPLATFORM_LIBPNG_FLAG = -lpng -lz' Makefile;
 
 export PATH="${_OLD_PATH}"; unset _OLD_PATH;
 mv Makefile.bak Makefile;
-
-
-
-
-

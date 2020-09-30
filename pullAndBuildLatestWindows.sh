@@ -100,4 +100,3 @@ echo "Run OneLife to play."
 
 echo
 echo "Done building v$latestVersion"
-

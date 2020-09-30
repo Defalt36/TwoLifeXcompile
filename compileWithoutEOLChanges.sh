@@ -86,11 +86,3 @@ cd windows_builds/$outputFolder
 # cmd.exe /c OneLife.exe
 
 echo "You shall find the compiled game at 'wherever your workdir'/windows_builds"
-
-
-
-
-
-
-
-
