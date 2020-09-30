@@ -33,7 +33,7 @@ echo; echo "Building OneLife..."
 make; echo "done compiling.";
 
 echo; echo "Building editor..."
-./makeEditor.sh; echo "done compiling."
+./makeEditorFixed.sh; echo "done compiling."
 
 cd ../server
 ./configure 5

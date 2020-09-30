@@ -232,7 +232,7 @@ Will install, download and run everything you need, then it will
 build the game, editor and server. This should be run at your workdir.
 </p>
 
-<h2>Note About Missing DLLs</h2>
+<h2>Note About Missing DLLs (fixed)</h2>
 
 <p>
 After some time I started getting an error when starting the editor. It says I miss
@@ -242,5 +242,5 @@ If you experience that problem, just copy the dlls from 'OneLife/build/win32' fr
 repository to the same folder as the exe requiring these files.<br />
 
 Removing the "OneLife/build/win32" line from 'exclude-list.txt' should include
-these files in '2hol_(x)' the next time you compile the game (now default).
+these files in '2hol_(x)' the next time you compile the game.
 </p>

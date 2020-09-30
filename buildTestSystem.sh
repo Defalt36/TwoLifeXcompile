@@ -73,7 +73,7 @@ echo 8005 > settings/customServerPort.ini
 
 echo
 echo "Building editor..."
-sh ./makeEditor.sh
+sh ./makeEditorFixed.sh #fix for the original makeEditor.sh
 echo "done compiling."
 
 echo

@@ -1,9 +1,11 @@
 exclude-dir
 /*.sh
 /*.txt
+OneLife/build/makeWindowsExtractor_template
 readme.md
 .git
 .git/
+OneLife/build/win32
 OneLife/gameSource/settings
 OneLife/server/settings
 OneLife/scripts
