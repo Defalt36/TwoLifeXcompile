@@ -84,8 +84,8 @@ cp OneLife/server/protocol.txt $outputFolder/server/
 cp OneLife/server/wordList.txt $outputFolder/server/
 
 cp OneLife/server/*.sh $outputFolder/server/
-cp TwoLifeXcompile/exclude-dir/initiateServer.bat
-cp TwoLifeXcompile/exclude-dir/resetServer.bat
+cp TwoLifeXcompile/exclude-dir/initiateServer.bat $outputFolder/server/
+cp TwoLifeXcompile/exclude-dir/resetServer.bat $outputFolder/server/
 
 cd $outputFolder/server
 sed -i 's+../gameSource/testMap.txt+../testMap.txt+' runServerTestMap.sh
