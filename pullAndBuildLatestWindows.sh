@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
-echo "This script was made to be run in wsl, some parts of it won't work on a pure linux enviroment."
-echo "You may have to create the symlinks manually if you are not running wsl with admistrator privileges."
-echo
-sleep 3
+NOW=$(date '+(%F,%H%M)')
+outputFolder="2HOL_$NOW-latest"
+
+pushd .
 
 if [ ! -e ../minorGems ]
 then
@@ -20,6 +20,27 @@ then
 	git clone https://github.com/twohoursonelife/OneLifeData7.git ../OneLifeData7
 fi
 
+cd ..
+
+mkdir $outputFolder
+cd $outputFolder
+
+#Gathering game assets
+for f in animations categories ground music objects sounds sprites transitions dataVersionNumber.txt; do
+    
+	#Create sym link only
+	# ln -s ../OneLifeData7/$f .
+	
+	#Copy from OneLifeData7 repo
+	cp -RL -v ../OneLifeData7/$f .
+	
+done;
+
+#missing SDL.dll
+cp ../OneLife/build/win32/SDL.dll .
+
+#Remove caches
+rm -f */*.fcz
 
 cd ..
 
@@ -40,11 +61,9 @@ git fetch --tags
 latestTaggedVersionB=`git for-each-ref --sort=-creatordate --format '%(refname:short)' --count=1 refs/tags/2HOL_v* | sed -e 's/2HOL_v//'`
 git checkout -q 2HOL_v$latestTaggedVersionB
 
-rm */cache.fcz
-
 cd ..
 
-cd TwoLifeXcompile
+popd
 ./applyLocalRequirements.sh
 ./fixStuff.sh
 cd ..
@@ -57,9 +76,8 @@ then
 	latestVersion=$latestTaggedVersionA
 fi
 
-cp TwoLifeXcompile/exclude-dir/createSymlinksForGame.bat .
-cmd.exe /c createSymlinksForGame.bat
-
+#cp TwoLifeXcompile/exclude-dir/createSymlinksForGame.bat .
+#cmd.exe /c createSymlinksForGame.bat
 
 cd OneLife
 chmod u+x ./configure
@@ -72,31 +90,42 @@ make || exit 1
 
 cd ../..
 
+echo
 echo "Making directories"
-mkdir -p graphics
-mkdir -p otherSounds
-mkdir -p settings
-mkdir -p languages
-mkdir -p reverbCache
-mkdir -p groundTileCache
+mkdir -p $outputFolder/graphics
+mkdir -p $outputFolder/otherSounds
+mkdir -p $outputFolder/settings
+mkdir -p $outputFolder/languages
+mkdir -p $outputFolder/reverbCache
+mkdir -p $outputFolder/groundTileCache
 
-
-
+echo
 echo "Copying items from build into directories"
-cp OneLife/gameSource/OneLife.exe .
-cp OneLife/documentation/Readme.txt .
-cp OneLife/no_copyright.txt .
-cp OneLife/gameSource/graphics/* ./graphics
-cp OneLife/gameSource/otherSounds/* ./otherSounds
-cp -u OneLife/gameSource/settings/* ./settings
-cp OneLife/gameSource/languages/* ./languages
-cp OneLife/gameSource/language.txt ./
-cp OneLife/gameSource/us_english_60.txt ./
-cp OneLife/gameSource/reverbImpulseResponse.aiff ./
-cp OneLife/gameSource/wordList.txt ./
-cp OneLife/build/win32/SDL.dll .
 
-echo "Run OneLife to play."
+cp OneLife/gameSource/OneLife.exe $outputFolder/ #exe extension
+cp OneLife/documentation/Readme.txt $outputFolder/
+cp OneLife/no_copyright.txt $outputFolder/
+cp OneLife/gameSource/graphics/* $outputFolder/graphics
+cp OneLife/gameSource/otherSounds/* $outputFolder/otherSounds
+cp -u OneLife/gameSource/settings/* $outputFolder/settings
+cp OneLife/gameSource/languages/* $outputFolder/languages
+cp OneLife/gameSource/language.txt $outputFolder/
+cp OneLife/gameSource/us_english_60.txt $outputFolder/
+cp OneLife/gameSource/reverbImpulseResponse.aiff $outputFolder/
+cp OneLife/gameSource/wordList.txt $outputFolder/
+
+if [ ! -e windows_builds ]
+then
+	mkdir windows_builds
+fi
+
+echo
+echo "Moving build folder."
+
+rm -rf windows_builds/$outputFolder
+mv $outputFolder windows_builds/
+
+echo "Run OneLife.exe to play."
 
 echo
 echo "Done building v$latestVersion"
