@@ -71,6 +71,8 @@ cp OneLife/gameSource/us_english_60.txt $outputFolder/
 cp OneLife/gameSource/reverbImpulseResponse.aiff $outputFolder/
 cp OneLife/gameSource/wordList.txt $outputFolder/
 
+echo default.png > $outputFolder/settings/editorImportPath.ini
+
 cp OneLife/server/OneLifeServer.exe $outputFolder/server/ #exe extension
 cp OneLife/server/webViewer/* $outputFolder/server/webViewer/
 cp -u OneLife/server/settings/* $outputFolder/server/settings/
