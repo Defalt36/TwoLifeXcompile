@@ -124,6 +124,7 @@ to do this using the repository scripts.
 <li><code>./compileAndMove.sh</code></li>
 <li><code>./compileWithoutEOLChanges.sh</code></li>
 <li><code>./buildTestSystem.sh</code></li>
+<li><code>./createFullBuild.sh</code></li>
 </ol>
 </p>
 
