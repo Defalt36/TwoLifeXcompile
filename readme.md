@@ -216,6 +216,11 @@ get SDL before running.
 </p>
 
 <p>
+<code>perform.sh</code><br />
+read next section.
+</p>
+
+<p>
 <code>buildTestSystem.sh</code><br />
 It will clone missing repositories if any and build a test system for experimenting with
 the game. As the preceding you need SDL before running this.
@@ -230,6 +235,21 @@ Build the game, editor and server and puts them in a single folder.
 <code>doEverything.sh</code><br />
 Will install, download and run everything you need, then it will
 build the game, editor and server. This should be run at your workdir.
+</p>
+
+<h2>Fast building</h2>
+
+<p>
+Use <code>./cleanOldBuilds.sh --selective</code> to open the file name selection field.
+The script will only remove the files you specify, so when rebuilding you will have to
+compile a lot less files. This is useful for quick testing.
+
+The 'perform.sh' script can be used to clean, build and open the applications quickly.<br />
+Its '-c' option will work similarly to the previous script option '--selective' but
+it will instead remove the files specified in the own script code. Use a text editor
+to modify the files specified.<br />
+The usage is <code>./perform.sh -cbr egs</code>. 'cbr' means 'Clean, Build and Run' and
+'egs' means 'Editor, Game and Server' (note these arguments only work with the options b and r).<br />
 </p>
 
 <h2>Note About Missing DLLs (fixed)</h2>
