@@ -1,6 +1,25 @@
+#!/bin/bash
+
 #
 # Original by risvh
 #
+
+pack=false
+for arg in "$@"
+do
+    case $arg in
+        --pack)
+		pack=true
+		shift
+        ;;
+        *)
+		echo "Unrecognised flag"
+		exit 1
+		shift
+        ;;
+    esac
+done
+
 
 cd ..
 NOW=$(date '+(%F,%H%M)')
@@ -8,8 +27,8 @@ outputFolder="2HOL_$NOW-nocnv"
 mkdir $outputFolder
 cd $outputFolder
 
-
-#Gathering game assets
+echo
+echo "Gathering game assets..."
 for f in animations categories ground music objects sounds sprites transitions dataVersionNumber.txt; do
     
 	#Create sym link only
@@ -18,7 +37,8 @@ for f in animations categories ground music objects sounds sprites transitions d
 	#Copy from OneLifeData7 repo
 	cp -RL -v ../OneLifeData7/$f .
 	
-done;
+done
+echo "done."
 
 #missing SDL.dll
 cp ../OneLife/build/win32/SDL.dll .
@@ -51,10 +71,10 @@ mkdir -p $outputFolder/settings
 mkdir -p $outputFolder/languages
 mkdir -p $outputFolder/reverbCache
 mkdir -p $outputFolder/groundTileCache
+echo "done."
 
 echo
 echo "Copying items from build into directories"
-
 cp OneLife/gameSource/OneLife.exe $outputFolder/ #exe extension
 cp OneLife/documentation/Readme.txt $outputFolder/
 cp OneLife/no_copyright.txt $outputFolder/
@@ -66,6 +86,7 @@ cp OneLife/gameSource/language.txt $outputFolder/
 cp OneLife/gameSource/us_english_60.txt $outputFolder/
 cp OneLife/gameSource/reverbImpulseResponse.aiff $outputFolder/
 cp OneLife/gameSource/wordList.txt $outputFolder/
+echo "done."
 
 if [ ! -e windows_builds ]
 then
@@ -74,15 +95,19 @@ fi
 
 echo
 echo "Moving build folder."
-
 rm -rf windows_builds/$outputFolder
 mv $outputFolder windows_builds/
+echo "done."
+
+
+cd windows_builds
+if $pack
+then
+	echo
+	echo "Packing game..."
+	7z a $outputFolder.zip $outputFolder
+	echo "done."
+fi
 
 echo
-echo "Done."
-
-#automatically run the game 
-cd windows_builds/$outputFolder
-# cmd.exe /c OneLife.exe
-
 echo "You shall find the compiled game at 'wherever your workdir'/windows_builds"

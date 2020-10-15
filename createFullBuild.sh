@@ -1,17 +1,34 @@
 #!/bin/bash
 
+pack=false
+for arg in "$@"
+do
+    case $arg in
+        --pack)
+		pack=true
+		shift
+        ;;
+        *)
+		echo "Unrecognised flag"
+		exit 1
+		shift
+        ;;
+    esac
+done
+
 cd ..
 NOW=$(date '+(%F,%H%M)')
 outputFolder="2HOL_$NOW-full"
 mkdir $outputFolder
 cd $outputFolder
 
-
-#Gathering game assets
+echo
+echo "Gathering game assets..."
 for f in animations categories faces ground music objects overlays scenes sounds sprites transitions tutorialMaps dataVersionNumber.txt; do
 	#Copy from OneLifeData7 repo
 	cp -RL -v ../OneLifeData7/$f .
-done;
+done
+echo "done."
 
 #missing dlls
 cp ../OneLife/build/win32/*.dll .
@@ -44,7 +61,7 @@ make; echo "done compiling."
 cd ../..
 
 echo
-echo "Making directories"
+echo "Making directories..."
 mkdir -p $outputFolder/graphics
 mkdir -p $outputFolder/otherSounds
 mkdir -p $outputFolder/settings
@@ -54,10 +71,10 @@ mkdir -p $outputFolder/groundTileCache
 mkdir -p $outputFolder/server
 mkdir -p $outputFolder/server/webViewer
 mkdir -p $outputFolder/server/settings
+echo "done."
 
 echo
-echo "Copying items from build into directories"
-
+echo "Copying items from build into directories..."
 cp OneLife/gameSource/OneLife.exe $outputFolder/ #exe extension
 cp OneLife/gameSource/EditOneLife.exe $outputFolder/ #exe extension
 cp OneLife/documentation/Readme.txt $outputFolder/
@@ -88,6 +105,7 @@ cp OneLife/server/wordList.txt $outputFolder/server/
 cp OneLife/server/*.sh $outputFolder/server/
 cp TwoLifeXcompile/exclude-dir/initiateServer.bat $outputFolder/server/
 cp TwoLifeXcompile/exclude-dir/resetServer.bat $outputFolder/server/
+echo "done."
 
 cd $outputFolder/server
 sed -i 's+../gameSource/testMap.txt+../testMap.txt+' runServerTestMap.sh
@@ -100,11 +118,18 @@ fi
 
 echo
 echo "Moving build folder."
-
 rm -rf windows_builds/$outputFolder
 mv $outputFolder windows_builds/
+echo "done."
+
+cd windows_builds
+if $pack
+then
+	echo
+	echo "Packing game..."
+	7z a $outputFolder.zip $outputFolder
+	echo "done."
+fi
 
 echo
-echo "Done."
-
 echo "You shall find the compiled game at 'wherever your workdir'/windows_builds"

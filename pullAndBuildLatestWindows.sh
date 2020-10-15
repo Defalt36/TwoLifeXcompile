@@ -1,31 +1,46 @@
 #!/bin/bash
 
-NOW=$(date '+(%F,%H%M)')
-outputFolder="2HOL_$NOW-latest"
+pack=false
+for arg in "$@"
+do
+    case $arg in
+        --pack)
+		pack=true
+		shift
+        ;;
+        *)
+		echo "Unrecognised flag"
+		exit 1
+		shift
+        ;;
+    esac
+done
 
 pushd .
+cd ..
 
-if [ ! -e ../minorGems ]
+if [ ! -e minorGems ]
 then
 	git clone https://github.com/twohoursonelife/minorGems.git ../minorGems
 fi
 
-if [ ! -e ../OneLife ]
+if [ ! -e OneLife ]
 then
 	git clone https://github.com/twohoursonelife/OneLife.git ../OneLife
 fi
 
-if [ ! -e ../OneLifeData7 ]
+if [ ! -e OneLifeData7 ]
 then
 	git clone https://github.com/twohoursonelife/OneLifeData7.git ../OneLifeData7
 fi
 
-cd ..
-
+NOW=$(date '+(%F,%H%M)')
+outputFolder="2HOL_$NOW-latest"
 mkdir $outputFolder
 cd $outputFolder
 
-#Gathering game assets
+echo
+echo "Gathering game assets.."
 for f in animations categories ground music objects sounds sprites transitions dataVersionNumber.txt; do
     
 	#Create sym link only
@@ -34,7 +49,8 @@ for f in animations categories ground music objects sounds sprites transitions d
 	#Copy from OneLifeData7 repo
 	cp -RL -v ../OneLifeData7/$f .
 	
-done;
+done
+echo "done."
 
 #missing SDL.dll
 cp ../OneLife/build/win32/SDL.dll .
@@ -121,9 +137,18 @@ fi
 
 echo
 echo "Moving build folder."
-
 rm -rf windows_builds/$outputFolder
 mv $outputFolder windows_builds/
+echo "done."
+
+cd windows_builds
+if $pack
+then
+	echo
+	echo "Packing game..."
+	7z a $outputFolder.zip $outputFolder
+	echo "done."
+fi
 
 echo "Run OneLife.exe to play."
 

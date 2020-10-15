@@ -1,1 +1,1 @@
-rsync -vr --exclude-from 'exclude-list.txt' . ..
+rsync -vr --exclude-from 'exclude-dir/exclude-list.txt' . ..

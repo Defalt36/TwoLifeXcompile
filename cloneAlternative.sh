@@ -35,14 +35,14 @@ if [ -z "$MGU" ]; then MGU=$defaultUser; fi
 if [ -z "$OLD7U" ]; then OLD7U=$defaultUser; fi
 
 echo
-echo "Get repositories with different names or branches?"
+echo "Get repositories with different..."
 
 select nyn in "Names" "Branches" "Both" "None"; do
     case $nyn in
-        Names ) askForVarNames=true; askForBranchNames=false; break;;
+		Names ) askForVarNames=true; askForBranchNames=false; break;;
 		Branches ) askForBranchNames=true; askForVarNames=false; break;;
 		Both ) askForVarNames=true; askForBranchNames=true; break;;
-        None ) askForVarNames=false; askForBranchNames=false; echo "Assuming standard names and branches."; break;;
+		None ) askForVarNames=false; askForBranchNames=false; echo "Assuming default names and branches."; break;;
     esac
 done
 
@@ -52,7 +52,7 @@ then
 	echo "Enter the name of the repository (let blank for default)."
 	read -p "${OLU^^}'s OneLife repository name:" OLN
 	read -p "${MGU^^}'s minorGems repository name:" MGN
-	read -p "${OLD7U^^}'s OLD7 repository name:" OLD7N
+	read -p "${OLD7U^^}'s OneLifeData7 repository name:" OLD7N
 fi
 
 if [ -z "$OLN" ]; then OLN="OneLife"; fi
@@ -65,7 +65,7 @@ then
 	echo "Enter alternative branch name (let blank for master)."
 	read -p "${OLU^^}'s OneLife alternative branch:" OLB
 	read -p "${MGU^^}'s minorGems alternative branch:" MGB
-	read -p "${OLD7U^^}'s OLD7 alternative branch:" OLDB
+	read -p "${OLD7U^^}'s OneLifeData7 alternative branch:" OLDB
 fi
 
 if [ -z "$OLB" ]; then OLB="master"; fi

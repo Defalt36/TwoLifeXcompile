@@ -80,7 +80,6 @@ For me it is: <br />
 
 Run:<br />
 <code>./getBasics.sh</code><br />
-<code>./installMingw.sh</code><br />
 
 Run this if you want to be able to build the editor:<br />
 <code>./installMissingLibraries.sh</code><br />

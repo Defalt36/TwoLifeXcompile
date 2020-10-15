@@ -1,4 +1,4 @@
-cd ../OneLife/server
+cd ../../OneLife/server
 
 echo
 echo "Warning: There is no going back."

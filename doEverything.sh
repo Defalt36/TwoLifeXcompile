@@ -22,7 +22,6 @@ git clone https://github.com/Defalt36/TwoLifeXcompile.git
 cd TwoLifeXcompile
 
 ./getBasics.sh
-./installMingw.sh
 ./installMissingLibraries.sh
 ./getSDLforMingw.sh
 ./removeAndCloneAgain.sh
