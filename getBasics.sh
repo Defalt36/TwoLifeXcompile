@@ -1,5 +1,5 @@
 cd ..
-#uou may need this before procceeding
+#you may need this before procceeding
 sudo apt-get --assume-yes update
 
 #actual basics
