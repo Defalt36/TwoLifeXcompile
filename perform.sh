@@ -111,7 +111,7 @@ then
 		cd OneLife
 		./configure 5
 		cd gameSource
-		make
+		make || exit 1
 		cd ../..
 	fi
 
@@ -122,7 +122,7 @@ then
 		cd OneLife
 		./configure 5
 		cd gameSource
-		./makeEditorFixed.sh
+		./makeEditorFixed.sh || exit 1
 		cd ../..
 	fi
 
@@ -132,7 +132,7 @@ then
 		echo "Building server..."
 		cd OneLife/server
 		./configure 5
-		make
+		make || exit 1
 		cd ../..
 	fi
 fi
