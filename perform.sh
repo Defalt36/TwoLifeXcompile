@@ -15,7 +15,7 @@ workdir=".."
 toClean=('LivingLifePage' 'server')
 
 
-GAME=false;EDITOR=false;SERVER=false;BUILD=false;CLEAN=false;RUN=false
+GAME=false;EDITOR=false;SERVER=false;BUILD=false;CLEAN=false;RUN=false;STDOUT=false
 if [ $# -lt 1 ] || [ $# -gt 2 ]
 then
 	echo "You must use one or two arguments. Open this file in a file editor for more info."
@@ -31,6 +31,11 @@ else
 	for arg in ${arguments1[@]}
 	do
 		case $arg in
+			s)
+			echo "Override behavior, opening stdout.txt..."
+			STDOUT=true
+			break
+			;;
 			c)
 			echo "Cleaning yes"
 			CLEAN=true
@@ -53,7 +58,10 @@ else
 	done
 	echo
 	#check -b or -r sub arguments
-	if $BUILD || $RUN
+	if $STDOUT
+	then
+		#nothing
+	elif $BUILD || $RUN
 	then
 		#check specified arguments
 		for arg in ${arguments2[@]}
@@ -78,12 +86,19 @@ else
 			esac
 		done
 	else
-		echo "Second argument ignored."
+		echo "Second argument missing or ignored."
 	fi
 	echo
 fi
 
 cd $workdir
+
+if $STDOUT
+then
+	cd OneLife/gameSource
+	cat stdout.txt || echo; echo "missing stdout.txt"
+	exit
+fi
 
 if $CLEAN
 then
