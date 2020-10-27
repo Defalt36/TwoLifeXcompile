@@ -60,7 +60,7 @@ else
 	#check -b or -r sub arguments
 	if $STDOUT
 	then
-		#nothing
+		echo
 	elif $BUILD || $RUN
 	then
 		#check specified arguments
