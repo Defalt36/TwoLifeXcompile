@@ -264,3 +264,11 @@ repository to the same folder as the exe requiring these files.<br />
 Removing the "OneLife/build/win32" line from 'exclude-list.txt' should include
 these files in '2hol_(x)' the next time you compile the game.
 </p>
+
+<h2>Known Issues</h2>
+
+<p>
+<ol>
+<li>SDL won't install if it is in a folder with blank spaces in the path.</li>
+</ol>
+</p>
