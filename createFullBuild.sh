@@ -68,9 +68,7 @@ mkdir -p $outputFolder/settings
 mkdir -p $outputFolder/languages
 mkdir -p $outputFolder/reverbCache
 mkdir -p $outputFolder/groundTileCache
-mkdir -p $outputFolder/server
-mkdir -p $outputFolder/server/webViewer
-mkdir -p $outputFolder/server/settings
+mkdir -p $outputFolder/webViewer
 echo "done."
 
 echo
@@ -81,35 +79,35 @@ cp OneLife/documentation/Readme.txt $outputFolder/
 cp OneLife/no_copyright.txt $outputFolder/
 cp OneLife/gameSource/graphics/* $outputFolder/graphics/
 cp OneLife/gameSource/otherSounds/* $outputFolder/otherSounds/
-cp -u OneLife/gameSource/settings/* $outputFolder/settings/
+cp -u OneLife/gameSource/settings/* $outputFolder/settings/ #some overwriting will happen
 cp OneLife/gameSource/languages/* $outputFolder/languages/
 cp OneLife/gameSource/language.txt $outputFolder/
 cp OneLife/gameSource/us_english_60.txt $outputFolder/
 cp OneLife/gameSource/reverbImpulseResponse.aiff $outputFolder/
-cp OneLife/gameSource/wordList.txt $outputFolder/
+#cp OneLife/gameSource/wordList.txt $outputFolder/ #use of server instead
 
 echo default.png > $outputFolder/settings/editorImportPath.ini
 
-cp OneLife/server/OneLifeServer.exe $outputFolder/server/ #exe extension
-cp OneLife/server/webViewer/* $outputFolder/server/webViewer/
-cp -u OneLife/server/settings/* $outputFolder/server/settings/
-cp OneLife/server/firstNames.txt $outputFolder/server/
-cp OneLife/server/kissTest.txt $outputFolder/server/
-cp OneLife/server/lastNames.txt $outputFolder/server/
-cp OneLife/server/namesInfo.txt $outputFolder/server/
-cp OneLife/server/protocol.txt $outputFolder/server/
-cp OneLife/server/sampleTestMap.txt $outputFolder/server/
-cp OneLife/server/protocol.txt $outputFolder/server/
-cp OneLife/server/wordList.txt $outputFolder/server/
+cp OneLife/server/OneLifeServer.exe $outputFolder/ #exe extension
+cp OneLife/server/webViewer/* $outputFolder/webViewer/
+cp -u OneLife/server/settings/* $outputFolder/settings/ #some overwriting will happen
+cp OneLife/server/firstNames.txt $outputFolder/
+cp OneLife/server/kissTest.txt $outputFolder/
+cp OneLife/server/lastNames.txt $outputFolder/
+#cp OneLife/server/namesInfo.txt $outputFolder/
+cp OneLife/server/protocol.txt $outputFolder/
+#cp OneLife/server/sampleTestMap.txt $outputFolder/
+cp OneLife/server/protocol.txt $outputFolder/
+cp OneLife/server/wordList.txt $outputFolder/
 
-cp OneLife/server/*.sh $outputFolder/server/
-cp TwoLifeXcompile/exclude-dir/initiateServer.bat $outputFolder/server/
-cp TwoLifeXcompile/exclude-dir/resetServer.bat $outputFolder/server/
+#cp OneLife/server/*.sh $outputFolder/server/
+cp TwoLifeXcompile/exclude-dir/resetServer.bat $outputFolder/
 echo "done."
 
-cd $outputFolder/server
-sed -i 's+../gameSource/testMap.txt+../testMap.txt+' runServerTestMap.sh
-cd ../..
+#cd $outputFolder/server
+#sed -i 's+../gameSource/testMap.txt+../testMap.txt+' runServerTestMap.sh
+
+#cd ../..
 
 if [ ! -e windows_builds ]
 then
