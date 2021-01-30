@@ -1,12 +1,20 @@
 #!/bin/bash
 
-sdlonly=false
+skipdefault=false
+sdl=false
+freetype=false
 
 for arg in "$@"
 do
     case $arg in
-        --sdlonly)
-		sdlonly=true
+        --sdl)
+		sdl=true
+		skipdefault=true
+		shift
+        ;;
+		--freetype)
+		freetype=true
+		skipdefault=true
 		shift
         ;;
         *)
@@ -22,6 +30,7 @@ done
 
 cd ..
 
+build="x86_64-linux-gnu"
 host="i686-w64-mingw32"
 prefixdir="/usr/i686-w64-mingw32"
 
@@ -31,24 +40,25 @@ then
 	mkdir -v installed_libraries	
 fi
 
-if [ "$sdlonly" = false ]
+if [ "$skipdefault" = false ]
 then
 	echo
 	echo "Preparing LibZ..."
-	wget http://zlib.net/zlib-1.2.11.tar.gz -O- | tar xfz -
+	wget https://zlib.net/zlib-1.2.11.tar.gz -O- | tar xfz -
 	cd zlib*
 	sudo make -f win32/Makefile.gcc BINARY_PATH=$prefixdir/bin INCLUDE_PATH=$prefixdir/include LIBRARY_PATH=$prefixdir/lib SHARED_MODE=1 PREFIX=$host- install
 	cd ..
 	mv zlib-1.2.11 installed_libraries/zlib-1.2.11_source
 fi
 
-if [ "$sdlonly" = false ]
+
+if [ "$skipdefault" = false ]
 then
 	#LibPng won't install propely if Zlib isn't installed fist
 	#Compiling libPng prompt my antivirus a lot, but it don't seem to interfere with anything
 	echo
 	echo "Preparing LibPng..."
-	wget http://downloads.sourceforge.net/project/libpng/libpng16/1.6.37/libpng-1.6.37.tar.gz -O- | tar xfz -
+	wget https://downloads.sourceforge.net/project/libpng/libpng16/1.6.37/libpng-1.6.37.tar.gz -O- | tar xfz -
 	cd libpng*
 	./configure \
 		--host=$host \
@@ -80,4 +90,25 @@ then
 	sudo make install
 	cd ..
 	mv SDL-1.2.15 installed_libraries/SDL-1.2.15_source
+fi
+
+if [ "$freetype" = true ]
+then
+	echo
+	echo "Preparing LibFreeType..."
+	wget https://downloads.sourceforge.net/project/freetype/freetype2/2.10.4/freetype-2.10.4.tar.gz -O- | tar xfz -
+	cd freetype*
+	./configure \
+		--bindir=$prefixdir/bin \
+		--libdir=$prefixdir/lib \
+		--includedir=$prefixdir/include \
+		--build=$build \
+		--host=$host \
+		--prefix=$prefixdir \
+		--enable-static \
+		CPPFLAGS="-I$prefixdir/include" \
+		LDFLAGS="-L$prefixdir/lib"
+	make
+	sudo make install
+	cd ..
 fi

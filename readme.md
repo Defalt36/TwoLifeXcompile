@@ -88,12 +88,9 @@ Run this if you want to be able to build the editor:<br />
 <h2>Preparing The Game Files</h2>
 
 <p>
-First you will have to clone the game files. The command <code>./removeAndCloneAgain.sh</code>
+First you will have to clone the game files. The command <code>./replaceClonedFolders.sh</code>
 should do this for you, but have in mind it will delete the game repositories you
 previously cloned (if any).<br />
-</p>
-
-<p>
 Note that command will clone the minorGems, OneLife and OneLifeData7 repositories from the
 TwoHoursOneLife github account. To clone from other sources you can use:
 <code>./cloneAlternative.sh</code>. 
@@ -110,7 +107,7 @@ After successfully cloning the game repositories to your work directory run:<br 
 <p>
 Before you start, if you already tried to compile anything run this command to remove
 the files generated from previously builds.<br />
-<code>./cleanOldBuilds.sh</code>
+<code>./perform.sh --cleanall</code>
 </p>
 
 <p>
@@ -120,20 +117,17 @@ to do this using the repository scripts.
 
 <p>
 <ol>
-<li><code>./compileAndMove.sh</code></li>
-<li><code>./compileWithoutEOLChanges.sh</code></li>
+<li><code>./fastBuildGame.sh</code></li>
 <li><code>./buildTestSystem.sh</code></li>
 <li><code>./createFullBuild.sh</code></li>
+<li><code>./perform.sh -b g</code></li>
 </ol>
 </p>
 
 <p>
-'compileAndMove.sh' will compile the game using the scripts that were copied to OneLife/build,
-and then move the game to the folder windows_builds in your work directory.<br />
 
-'compileWithoutEOLChanges.sh' will do basically the same as the first but it is much faster. The
-reason for this is that it does not convert the unix-style line endings to windows-style. It
-doesn't seem to cause any major problems.<br />
+'fastBuildGame.sh' will compile the game and then move the game to the folder windows_builds in your work directory.
+It is faster because it does not convert the unix-style line endings to windows-style, an optional step.<br />
 
 'buildTestSystem.sh' is very similar to pullAndBuildTestSystem.sh from the OneLife scripts; In
 fact, it is derived from it. It will clone the game repositories if they are missing and compile
@@ -141,18 +135,21 @@ the game, editor and server for you, modifing some files so it will be ready to 
 testing. Be warned you will be editing the repositories files when you use the editor. You may
 want to make a backup of the OneLifeData7 repository.
 
-'createFullBuild.sh' this last one will compile the game, server and editor and move all their
-files to a single folder in order to make a full build. If you are using this, remember to run
-the 'initiateServer.bat' file before running the server. 'resetServer.bat' is included to delete
-the server files if you are unable to run it due to a crash.
+'createFullBuild.sh' will compile the game, server and editor and move all their files to a single
+folder in order to make a full build. If you are using this, remember to run the 'initiateServer.bat'
+file before running the server. 'resetServer.bat' is included to delete the server files if you are
+unable to run it due to a crash.
+
+'perform.sh' is a multi utility script. It can build and run the game, server and editor depending on
+the flags you use. This is useful for testing.
 
 </p>
 
 <h2>Building From Another Source</h2>
 
 <p>
-You can run './cloneAlternative.sh' to clone from the game repositories under any name from
-any user. This is useful for cloning your own repositories. You can also clone the original game
+You can run './cloneAlternative.sh' to clone the game repositories under any name or user.
+This is useful for cloning your own repositories. You can also clone the original game
 repositories with it if you input 'jasonrohrer' as the user you want to clone from.<br />
 The compile script recomended when building from other sources is 'buildTestSystem.sh'.
 </p>
@@ -186,22 +183,21 @@ Used for cloning from other repositories, branches or users.
 
 <p>
 <code>installMissingLibraries.sh</code><br />
-You may have a lot of libraries in your system, but it seems you have to have them installed
-at your compiler for it to work. This script install the ones you need.
+You may have a lot of libraries in your system, but you need to have them installed
+to your compiler for it to work. This script install the ones you need.
 </p>
 
 <p>
-<code>installMissingLibraries.sh --sdlonly</code><br />
-Experimental.
+<code>installMissingLibraries.sh --sdl</code><br />
 This will install sdl in your distribution instead.
-You will have to replace some files from the repository folder minorGems/game/plataforms/SDL
-with their counterparts in exclude-dir.
+You can use the files optimized for this use present in exclude-dir.
+Originals are from: minorGems/game/plataforms/SDL
 </p>
 
 <p>
 <code>deleteAllServerFiles.sh</code><br />
-Forget to press control-c when exiting the server or you just want a fresh map? This script
-will send all your server files to oblivion.
+Did you forget to press control-c when exiting the server or you just want a fresh map? This script
+will send all your server files to oblivion, solving the problem.
 </p>
 
 <p>
@@ -210,8 +206,14 @@ Less destructive version of the above.
 </p>
 
 <p>
-<code>pullAndBuildLatestWindows.sh</code><br />
+<code>buildLatestTHOL.sh</code><br />
 Will automatically build the lastest version of Two Hours One Life for you. Make sure to
+get SDL before running.
+</p>
+
+<p>
+<code>buildLatestOHOL.sh</code><br />
+Will automatically build the lastest version of One Hour One Life for you. Make sure to
 get SDL before running.
 </p>
 
@@ -222,7 +224,7 @@ read next section.
 
 <p>
 <code>buildTestSystem.sh</code><br />
-It will clone missing repositories if any and build a test system for experimenting with
+This will clone missing repositories if any and build a test system for experimenting with
 the game. As the preceding you need SDL before running this.
 </p>
 
@@ -240,29 +242,16 @@ build the game, editor and server. This should be run at your workdir.
 <h2>Fast building</h2>
 
 <p>
-Use <code>./cleanOldBuilds.sh --selective</code> to open the file name selection field.
-The script will only remove the files you specify, so when rebuilding you will have to
-compile a lot less files. This is useful for quick testing.
-
 The 'perform.sh' script can be used to clean, build and open the applications quickly.<br />
-Its '-c' option will work similarly to the previous script option '--selective' but
-it will instead remove the files specified in the own script code. Use a text editor
-to modify the files specified.<br />
-The usage is <code>./perform.sh -cbr egs</code>. 'cbr' means 'Clean, Build and Run' and
-'egs' means 'Editor, Game and Server' (note these arguments only work with the options b and r).<br />
+Its '-c' option will clean only the files specified in the 'toClean' variable inside the script.<br />
+The usage is <code>./perform.sh (FLAGS) (PARAMETERS)</code>.<br />
+Flags: '-b' Build; '-r' Run; '-c' Clean; '-cleanall' Clean all build files.<br />
+Parameters: 'g' Game; 'e' Editor; 's' Server.<br />
 </p>
 
-<h2>Note About Missing DLLs (fixed)</h2>
-
 <p>
-After some time I started getting an error when starting the editor. It says I miss
-some dlls from libSDL, libpng and libz.<br />
-
-If you experience that problem, just copy the dlls from 'OneLife/build/win32' from this
-repository to the same folder as the exe requiring these files.<br />
-
-Removing the "OneLife/build/win32" line from 'exclude-list.txt' should include
-these files in '2hol_(x)' the next time you compile the game.
+Example: <code>./perform.sh -cbr gs</code> This will clean the files specified, build the game and
+server and then run both.
 </p>
 
 <h2>Known Issues</h2>

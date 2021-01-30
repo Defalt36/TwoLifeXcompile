@@ -24,8 +24,8 @@ cd TwoLifeXcompile
 ./getBasics.sh
 ./installMissingLibraries.sh
 ./getSDLforMingw.sh
-./removeAndCloneAgain.sh
+./replaceClonedFolders.sh
 ./fixStuff.sh
 ./applyLocalRequirements.sh
 ./buildTestSystem.sh
-./compileWithoutEOLChanges.sh
+./createFullBuild.sh
