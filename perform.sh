@@ -15,6 +15,7 @@
 workdir=".."
 buildsdir="../builds"
 toclean=('LivingLifePage' 'server' 'game')
+gamedir="../OneLife/gameSource"
 if [ -f "settings.txt" ] ; then
 	echo lol
 	settingsfile="settings.txt"
@@ -23,47 +24,49 @@ if [ -f "settings.txt" ] ; then
 
 	buildsdir=$(sed '2!d' $settingsfile)
 	buildsdir="${buildsdir:10}"
+
+	gamedir=$(sed '3!d' $settingsfile)
+	gamedir=(${gamedir:8})
 	
-	toclean=$(sed '3!d' $settingsfile)
+	toclean=$(sed '4!d' $settingsfile)
 	toclean=(${toclean:8})
 fi
 
-GAME=false;EDITOR=false;SERVER=false;BUILD=false;CLEAN=false;RUN=false;STDOUT=false;CLEANALL=false;REMOVEBINARIES=false
+GAME=false;EDITOR=false;SERVER=false;BUILD=false;CLEAN=false;RUN=false;STDOUT=false;CLEANALL=false;REMOVEBINARIES=false;COLLECT=false;TRANSLATE=false
 if [ $# -lt 1 ] || [ $# -gt 2 ] ; then
 	echo "You must use one or two arguments. Open this file in a file editor for more info."
 	exit
 else
 	SMALLFLAGS=true
+	
 	for arg in "$@" ; do
 		case $arg in
 			--stdout)
 			echo "Override behavior, opening stdout.txt..."
 			STDOUT=true
-			shift
-			break
-			;;
-			--clean)
-			echo "Cleaning - yes"
-			CLEAN=true
-			shift
-			break
-			;;
-			--cleanall)
-			echo "Cleaning Game Files - yes"
-			CLEANALL=true
-			shift
 			break
 			;;
 			--removebinaries)
 			echo "Removing Binaries - yes"
 			REMOVEBINARIES=true
-			shift
+			;;
+			--cleanall)
+			echo "Cleaning All - yes"
+			CLEANALL=true
 			break
+			;;
+			--collect)
+			echo "Collecting - yes"
+			COLLECT=true
+			;;
+			--translate)
+			echo "Translating - yes"
+			TRANSLATE=true
 			;;
 		esac
 	done
 	
-	if $STDOUT || $CLEAN || $CLEANALL || $REMOVEBINARIES ; then
+	if $STDOUT || $REMOVEBINARIES || $CLEANALL || $COLLECT || $TRANSLATE ; then
 		SMALLFLAGS=false
 	fi
 	
@@ -132,13 +135,6 @@ else
 fi
 
 cd $workdir
-
-if $STDOUT
-then
-	cd OneLife\gameSource
-	cat stdout.txt || echo; echo "missing stdout.txt"
-	exit
-fi
 
 if $REMOVEBINARIES
 then
@@ -244,4 +240,45 @@ then
 
 	cmd.exe /c openBinaries.bat
 	rm -f openBinaries.bat
+fi
+
+if $STDOUT
+then
+	cd $gamedir
+	cat stdout.txt || echo; echo "missing stdout.txt"
+	cd $workdir
+	exit
+fi
+
+if $COLLECT ; then
+	cd $gamedir/objects
+	echo "Collecting strings to collected.txt..."
+	for file in *
+	do
+		filename="${file:-8}"
+		filename="${filename%.txt}"
+		
+		if [ "${#filename}" -lt 5 ] ; then
+			oName=$(sed '2!d' $file)
+			echo "$file;$oName"
+		fi
+	done > ../collected.txt
+	cp ../collected.txt ../collected-backup.txt
+fi
+
+if $TRANSLATE ; then
+	cd $gamedir/objects
+	echo "Pushing input.txt strings to objects..."
+	while read line
+	do
+		IFS=';' read ADDR1 ADDR2 <<< $line
+		filename=$ADDR1
+		content=$ADDR2
+		
+		echo $ADDR1
+		echo $ADDR2
+		
+		sed -i "2 c $content" $filename
+	done < ../input.txt
+	cd $workdir
 fi
