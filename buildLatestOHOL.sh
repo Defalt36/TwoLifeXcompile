@@ -1,5 +1,16 @@
 #!/bin/bash
 
+workdir=".."
+buildsdir="../builds"
+if [ -f "settings.txt" ] ; then
+	settingsfile="settings.txt"
+	workdir=$(sed '1!d' $settingsfile)
+	workdir="${workdir:8}"
+
+	buildsdir=$(sed '2!d' $settingsfile)
+	buildsdir="${buildsdir:10}"
+fi
+
 pack=false
 for arg in "$@"
 do
@@ -17,7 +28,8 @@ do
 done
 
 pushd .
-cd ..
+
+cd $workdir
 
 if [ ! -e minorGems ]
 then
@@ -82,7 +94,8 @@ cd ..
 popd
 ./applyLocalRequirements.sh
 ./fixStuff.sh
-cd ..
+
+cd $workdir
 
 latestVersion=$latestTaggedVersionB
 
@@ -130,18 +143,18 @@ cp OneLife/gameSource/us_english_60.txt $outputFolder/
 cp OneLife/gameSource/reverbImpulseResponse.aiff $outputFolder/
 cp OneLife/gameSource/wordList.txt $outputFolder/
 
-if [ ! -e windows_builds ]
+if [ ! -e $buildsdir ]
 then
-	mkdir windows_builds
+	mkdir $buildsdir
 fi
 
 echo
 echo "Moving build folder."
-rm -rf windows_builds/$outputFolder
-mv $outputFolder windows_builds/
+rm -rf $buildsdir/$outputFolder
+mv $outputFolder $buildsdir/
 echo "done."
 
-cd windows_builds
+cd $buildsdir
 if $pack
 then
 	echo
@@ -150,7 +163,7 @@ then
 	echo "done."
 fi
 
-echo "Run OneLife.exe to play."
+echo "Run OneLife.exe on $buildsdir to play."
 
 echo
 echo "Done building v$latestVersion"

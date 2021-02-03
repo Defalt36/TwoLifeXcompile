@@ -1,10 +1,7 @@
-#!/bin/bash
-
+#!/bin/sh
 #
 # Imported by TwoLifeXcompile
-#
 # Original by risvh
-#
 
 _OLD_PATH="${PATH}"; export PATH="/usr/i686-w64-mingw32/bin:${PATH}";
 cp Makefile Makefile.bak;

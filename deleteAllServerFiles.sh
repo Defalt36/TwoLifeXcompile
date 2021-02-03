@@ -1,4 +1,13 @@
-cd ../OneLife/server
+#!/bin/bash
+
+workdir=".."
+if [ -f "settings.txt" ] ; then
+	settingsfile="settings.txt"
+	workdir=$(sed '1!d' $settingsfile)
+	workdir="${workdir:8}"
+fi
+
+cd $workdir/OneLife/server
 
 echo
 echo "Warning: There is no going back."

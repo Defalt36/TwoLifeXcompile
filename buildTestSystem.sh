@@ -1,55 +1,36 @@
 #!/bin/bash
 
-onlygamebinary=false
-
-for arg in "$@"
-do
-    case $arg in
-        --gameonly)
-		onlygamebinary=true
-		shift
-        ;;
-        *)
-		echo "Unrecognised flag"
-		exit 1
-		shift
-        ;;
-    esac
-done
+workdir=".."
+if [ -f "settings.txt" ] ; then
+	settingsfile="settings.txt"
+	workdir=$(sed '1!d' $settingsfile)
+	workdir="${workdir:8}"
+fi
 
 echo "This script was made to be run in wsl, some parts of it won't work on a pure linux enviroment."
 echo "You may have to create the symlinks manually if you are not running wsl with admistrator privileges."
 echo
 sleep 3
 
-if [ ! -e ../minorGems ]
+if [ ! -e $workdir/minorGems ]
 then
-	git clone https://github.com/twohoursonelife/minorGems.git ../minorGems
+	git clone https://github.com/twohoursonelife/minorGems.git $workdir/minorGems
 fi
 
-if [ ! -e ../OneLife ]
+if [ ! -e $workdir/OneLife ]
 then
-	git clone https://github.com/twohoursonelife/OneLife.git ../OneLife
+	git clone https://github.com/twohoursonelife/OneLife.git $workdir/OneLife
 fi
 
-if [ ! -e ../OneLifeData7 ]
+if [ ! -e $workdir/OneLifeData7 ]
 then
-	git clone https://github.com/twohoursonelife/OneLifeData7.git ../OneLifeData7
+	git clone https://github.com/twohoursonelife/OneLifeData7.git $workdir/OneLifeData7
 fi
 
 ./applyLocalRequirements.sh
 ./fixStuff.sh
 
-cd ..
-
-if $onlygamebinary
-then
-	cd OneLife
-	./configure 5
-	cd gameSource
-	make
-	exit
-fi
+cd $workdir
 
 cd OneLifeData7
 
@@ -62,18 +43,18 @@ cd ../OneLife
 
 cd gameSource
 
-echo
-echo "Building game..."
+echo;echo "Building game..."
 make
+
 echo "done compiling."
 
 echo 1 > settings/useCustomServer.ini
 echo localhost > settings/CustomServerAddress.ini
 echo 8005 > settings/customServerPort.ini
 
-echo
-echo "Building editor..."
+echo; echo "Building editor..."
 sh ./makeEditorFixed.sh #fix for the original makeEditor.sh
+
 echo "done compiling."
 
 echo
@@ -83,9 +64,10 @@ cp ../build/win32/*.dll .
 
 cd ../server
 ./configure 5
-echo
-echo "Building server..."
+
+echo; echo "Building server..."
 make
+
 echo "done compiling."
 
 echo
@@ -94,5 +76,4 @@ cmd.exe /c createSymlinksForServer.bat
 echo 0 > settings/requireTicketServerCheck.ini
 echo 1 > settings/forceEveLocation.ini
 
-echo
-echo "done :)"
+echo; echo "done :)"

@@ -11,10 +11,22 @@
 
 
 ############CONFIGURATION
-workdir=".."
-stdoutPath="OneLife/gameSource"
-toClean=('LivingLifePage' 'server' 'game')
 
+workdir=".."
+buildsdir="../builds"
+toclean=('LivingLifePage' 'server' 'game')
+if [ -f "settings.txt" ] ; then
+	echo lol
+	settingsfile="settings.txt"
+	workdir=$(sed '1!d' $settingsfile)
+	workdir="${workdir:8}"
+
+	buildsdir=$(sed '2!d' $settingsfile)
+	buildsdir="${buildsdir:10}"
+	
+	toclean=$(sed '3!d' $settingsfile)
+	toclean=(${toclean:8})
+fi
 
 GAME=false;EDITOR=false;SERVER=false;BUILD=false;CLEAN=false;RUN=false;STDOUT=false;CLEANALL=false;REMOVEBINARIES=false
 if [ $# -lt 1 ] || [ $# -gt 2 ] ; then
@@ -123,7 +135,7 @@ cd $workdir
 
 if $STDOUT
 then
-	cd $stdoutPath
+	cd OneLife\gameSource
 	cat stdout.txt || echo; echo "missing stdout.txt"
 	exit
 fi
@@ -155,11 +167,11 @@ fi
 
 if $CLEAN
 then
-	echo "Files to clean:" ${toClean[@]}
+	echo "Files to clean:" ${toclean[@]}
 	echo
 	#clean some build files
-	if [ ! -z "$toClean" ] ; then
-		for filename in ${toClean[@]}
+	if [ ! -z "$toclean" ] ; then
+		for filename in ${toclean[@]}
 		do
 			if [ -z $filename ]; then 
 				exit

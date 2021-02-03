@@ -1,5 +1,12 @@
 #!/bin/bash
 
+workdir=".."
+if [ -f "settings.txt" ] ; then
+	settingsfile="settings.txt"
+	workdir=$(sed '1!d' $settingsfile)
+	workdir="${workdir:8}"
+fi
+
 skipdefault=false
 sdl=false
 freetype=false
@@ -28,7 +35,7 @@ done
 #no "libpng.a", "libz.a" or "libSDL.a" in 32-bit mingw folder
 #check with $ sudo find /usr/i686-w64-mingw32/lib/ -name "lib*.a"
 
-cd ..
+cd $workdir
 
 build="x86_64-linux-gnu"
 host="i686-w64-mingw32"

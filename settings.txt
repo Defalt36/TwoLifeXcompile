@@ -1,0 +1,3 @@
+workdir=..
+buildsdir=../builds
+toclean=LivingLifePage game server

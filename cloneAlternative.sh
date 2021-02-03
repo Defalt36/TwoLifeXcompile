@@ -1,11 +1,18 @@
 #!/bin/bash
 
+workdir=".."
+buildsdir="../builds"
+if [ -f "settings.txt" ] ; then
+	settingsfile="settings.txt"
+	workdir=$(sed '1!d' $settingsfile)
+	workdir="${workdir:8}"
+fi
+
+
 defaultUser="twohoursonelife"
 
-cd ..
-
-echo
-echo "Remove existing repositories now? "
+cd $workdir
+echo; echo "Remove existing repositories now? "
 
 select yn in "Yes" "No"; do
     case $yn in
@@ -14,8 +21,8 @@ select yn in "Yes" "No"; do
     esac
 done
 
-echo
-echo "Write anything to override all users. Press enter to continue."
+echo; echo "Write anything to override all users. Press enter to continue."
+
 read soloUserN
 
 if [ -z "$soloUserN" ]
@@ -34,8 +41,7 @@ if [ -z "$OLU" ]; then OLU=$defaultUser; fi
 if [ -z "$MGU" ]; then MGU=$defaultUser; fi
 if [ -z "$OLD7U" ]; then OLD7U=$defaultUser; fi
 
-echo
-echo "Get repositories with different..."
+echo; echo "Get repositories with different..."
 
 select nyn in "Names" "Branches" "Both" "None"; do
     case $nyn in
@@ -48,8 +54,7 @@ done
 
 if $askForVarNames
 then
-	echo
-	echo "Enter the name of the repository (let blank for default)."
+	echo; echo "Enter the name of the repository (let blank for default)."
 	read -p "${OLU^^}'s OneLife repository name:" OLN
 	read -p "${MGU^^}'s minorGems repository name:" MGN
 	read -p "${OLD7U^^}'s OneLifeData7 repository name:" OLD7N
@@ -61,8 +66,7 @@ if [ -z "$OLD7N" ]; then OLD7N="OneLifeData7"; fi
 
 if $askForBranchNames
 then
-	echo
-	echo "Enter alternative branch name (let blank for master)."
+	echo; echo "Enter alternative branch name (let blank for master)."
 	read -p "${OLU^^}'s OneLife alternative branch:" OLB
 	read -p "${MGU^^}'s minorGems alternative branch:" MGB
 	read -p "${OLD7U^^}'s OneLifeData7 alternative branch:" OLDB
@@ -72,10 +76,10 @@ if [ -z "$OLB" ]; then OLB="master"; fi
 if [ -z "$MGB" ]; then MGB="master"; fi
 if [ -z "$OLD7B" ]; then OLD7B="master"; fi
 
-echo
-echo "Will clone ${OLU^^}'s $OLN, ${MGU^^}'s $MGN and ${OLD7U^^}'s $OLD7N."
-echo
-echo "PRESS ENTER TO START OR CTRL-C TO CANCEL."
+echo; echo "Will clone ${OLU^^}'s $OLN, ${MGU^^}'s $MGN and ${OLD7U^^}'s $OLD7N."
+
+echo; echo "PRESS ENTER TO START OR CTRL-C TO CANCEL."
+
 read userIn
 
 git clone https://github.com/$OLU/$OLN.git -b $OLB --single-branch OneLife

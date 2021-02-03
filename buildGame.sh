@@ -1,8 +1,18 @@
 #!/bin/bash
-
 #
 # Original by risvh
-#
+
+locationsfile="exclude-dir/locations.txt"
+
+if [ -f "locations.txt" ] ; then
+	locationsfile="locations.txt"
+fi
+
+workdir=$(sed '1!d' $locationsfile)
+workdir="${workdir:8}"
+
+buildsdir=$(sed '2!d' $locationsfile)
+buildsdir="${buildsdir:10}"
 
 pack=false
 for arg in "$@"
@@ -21,7 +31,8 @@ do
 done
 
 
-cd ..
+cd $workdir
+
 NOW=$(date '+(%F,%H%M)')
 outputFolder="2HOL_$NOW-nocnv"
 mkdir $outputFolder
@@ -88,19 +99,19 @@ cp OneLife/gameSource/reverbImpulseResponse.aiff $outputFolder/
 cp OneLife/gameSource/wordList.txt $outputFolder/
 echo "done."
 
-if [ ! -e windows_builds ]
+if [ ! -e $buildsdir ]
 then
-	mkdir windows_builds
+	mkdir $buildsdir
 fi
 
 echo
 echo "Moving build folder."
-rm -rf windows_builds/$outputFolder
-mv $outputFolder windows_builds/
+rm -rf $buildsdir/$outputFolder
+mv $outputFolder $buildsdir/
 echo "done."
 
 
-cd windows_builds
+cd $buildsdir
 if $pack
 then
 	echo
@@ -110,4 +121,4 @@ then
 fi
 
 echo
-echo "You shall find the compiled game at 'wherever your workdir'/windows_builds"
+echo "You shall find the compiled game at $buildsdir"

@@ -1,8 +1,6 @@
 #!/bin/bash
-
 #
 # Original by risvh
-#
 
 echo "This is going to take some time."
 sleep 3

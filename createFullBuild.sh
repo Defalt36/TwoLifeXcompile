@@ -1,5 +1,16 @@
 #!/bin/bash
 
+workdir=".."
+buildsdir="../builds"
+if [ -f "settings.txt" ] ; then
+	settingsfile="settings.txt"
+	workdir=$(sed '1!d' $settingsfile)
+	workdir="${workdir:8}"
+
+	buildsdir=$(sed '2!d' $settingsfile)
+	buildsdir="${buildsdir:10}"
+fi
+
 pack=false
 for arg in "$@"
 do
@@ -16,7 +27,8 @@ do
     esac
 done
 
-cd ..
+cd $workdir
+
 NOW=$(date '+(%F,%H%M)')
 outputFolder="2HOL_$NOW-full"
 mkdir $outputFolder
@@ -109,18 +121,18 @@ echo "done."
 
 #cd ../..
 
-if [ ! -e windows_builds ]
+if [ ! -e $buildsdir ]
 then
-	mkdir windows_builds
+	mkdir $buildsdir
 fi
 
 echo
 echo "Moving build folder."
-rm -rf windows_builds/$outputFolder
-mv $outputFolder windows_builds/
+rm -rf $buildsdir/$outputFolder
+mv $outputFolder $buildsdir/
 echo "done."
 
-cd windows_builds
+cd $buildsdir
 if $pack
 then
 	echo
@@ -130,4 +142,4 @@ then
 fi
 
 echo
-echo "You shall find the compiled game at 'wherever your workdir'/windows_builds"
+echo "You shall find the compiled game at $buildsdir"
