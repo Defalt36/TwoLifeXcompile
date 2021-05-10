@@ -2,3 +2,4 @@ workdir=..
 buildsdir=../builds
 gamedir=../OneLife/gameSource
 toclean=LivingLifePage game server
+shallowclone=yes

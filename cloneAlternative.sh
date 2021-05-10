@@ -6,6 +6,9 @@ if [ -f "settings.txt" ] ; then
 	settingsfile="settings.txt"
 	workdir=$(sed '1!d' $settingsfile)
 	workdir="${workdir:8}"
+	
+	shallowclone=$(sed '5!d' $settingsfile)
+	shallowclone=(${shallowclone:13})
 fi
 
 
@@ -82,6 +85,15 @@ echo; echo "PRESS ENTER TO START OR CTRL-C TO CANCEL."
 
 read userIn
 
-git clone --depth=1 https://github.com/$OLU/$OLN.git -b $OLB --single-branch OneLife
-git clone --depth=1 https://github.com/$MGU/$MGN.git -b $MGB --single-branch minorGems
-git clone --depth=1 https://github.com/$OLD7U/$OLD7N.git -b $OLD7B --single-branch OneLifeData7
+if [ $shallowclone == "yes" ]
+then
+	echo; echo "Shallow Cloning:"
+	git clone --depth=1 https://github.com/$OLU/$OLN.git -b $OLB --single-branch OneLife
+	git clone --depth=1 https://github.com/$MGU/$MGN.git -b $MGB --single-branch minorGems
+	git clone --depth=1 https://github.com/$OLD7U/$OLD7N.git -b $OLD7B --single-branch OneLifeData7
+else
+	echo; echo "Normal Cloning:"
+	git clone https://github.com/$OLU/$OLN.git -b $OLB --single-branch OneLife
+	git clone https://github.com/$MGU/$MGN.git -b $MGB --single-branch minorGems
+	git clone https://github.com/$OLD7U/$OLD7N.git -b $OLD7B --single-branch OneLifeData7
+fi
