@@ -33,17 +33,17 @@ cd $workdir
 
 if [ ! -e minorGems ]
 then
-	git clone https://github.com/jasonrohrer/minorGems.git ../minorGems
+	git clone https://github.com/jasonrohrer/minorGems.git minorGems
 fi
 
 if [ ! -e OneLife ]
 then
-	git clone https://github.com/jasonrohrer/OneLife.git ../OneLife
+	git clone https://github.com/jasonrohrer/OneLife.git OneLife
 fi
 
 if [ ! -e OneLifeData7 ]
 then
-	git clone https://github.com/jasonrohrer/OneLifeData7.git ../OneLifeData7
+	git clone https://github.com/jasonrohrer/OneLifeData7.git OneLifeData7
 fi
 
 NOW=$(date '+(%F,%H%M)')
