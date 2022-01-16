@@ -44,7 +44,7 @@ prefixdir="/usr/i686-w64-mingw32"
 #keep the libraries in case you want to uninstall them later
 if [ ! -e installed_libraries ]
 then
-	mkdir -v installed_libraries	
+	mkdir -v installed_libraries
 fi
 
 if [ "$skipdefault" = false ]
@@ -78,7 +78,7 @@ then
 	mv libpng-1.6.37 installed_libraries/libpng-1.6.37_source
 fi
 
-if [ "$sdlonly" = true ]
+if [ "$sdl" = true ]
 then
 	echo
 	echo "Preparing LibSDL..."
@@ -102,20 +102,18 @@ fi
 if [ "$freetype" = true ]
 then
 	echo
-	echo "Preparing LibFreeType..."
-	wget https://downloads.sourceforge.net/project/freetype/freetype2/2.10.4/freetype-2.10.4.tar.gz -O- | tar xfz -
+	echo "Preparing LibFreeType2..."
+	wget https://downloads.sourceforge.net/project/freetype/freetype2/2.11.1/freetype-2.11.1.tar.gz -O- | tar xfz -
 	cd freetype*
 	./configure \
-		--bindir=$prefixdir/bin \
-		--libdir=$prefixdir/lib \
-		--includedir=$prefixdir/include \
+		--prefix=$prefixdir \
 		--build=$build \
 		--host=$host \
-		--prefix=$prefixdir \
-		--enable-static \
 		CPPFLAGS="-I$prefixdir/include" \
-		LDFLAGS="-L$prefixdir/lib"
+		LDFLAGS="-L$prefixdir/lib" \
+		PKG_CONFIG_LIBDIR=$prefixdir/lib/pkgconfig
 	make
 	sudo make install
 	cd ..
+	mv freetype-2.11.1 installed_libraries/freetype-2.11.1_source
 fi

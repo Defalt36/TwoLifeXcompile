@@ -17,7 +17,6 @@ buildsdir="../builds"
 toclean=('LivingLifePage' 'server' 'game')
 gamedir="../OneLife/gameSource"
 if [ -f "settings.txt" ] ; then
-	echo lol
 	settingsfile="settings.txt"
 	workdir=$(sed '1!d' $settingsfile)
 	workdir="${workdir:8}"
@@ -27,7 +26,7 @@ if [ -f "settings.txt" ] ; then
 
 	gamedir=$(sed '3!d' $settingsfile)
 	gamedir=(${gamedir:8})
-	
+
 	toclean=$(sed '4!d' $settingsfile)
 	toclean=(${toclean:8})
 fi
@@ -38,7 +37,7 @@ if [ $# -lt 1 ] || [ $# -gt 2 ] ; then
 	exit
 else
 	SMALLFLAGS=true
-	
+
 	for arg in "$@" ; do
 		case $arg in
 			--stdout)
@@ -65,11 +64,11 @@ else
 			;;
 		esac
 	done
-	
+
 	if $STDOUT || $REMOVEBINARIES || $CLEANALL || $COLLECT || $TRANSLATE ; then
 		SMALLFLAGS=false
 	fi
-	
+
 	if $SMALLFLAGS ; then
 		arguments1=($(echo $1 | fold -w1))
 		arguments2=($(echo $2 | fold -w1))
@@ -101,7 +100,7 @@ else
 				;;
 			esac
 		done
-	
+
 		echo
 		#check -b or -r sub arguments
 		if $BUILD || $RUN ; then
@@ -155,9 +154,9 @@ fi
 if $CLEANALL
 then
 	echo "Cleaning all..."
-	find . -type f -name '*.o' -exec rm -vf {} +
-	find . -type f -name '*.dep' -exec rm -vf {} +
-	find . -type f -name '*.dep2' -exec rm -vf {} +
+	find . -type f -name '*.o' -not -path "./installed_libraries/*" -exec rm -vf {} +
+	find . -type f -name '*.dep' -not -path "./installed_libraries/*" -exec rm -vf {} +
+	find . -type f -name '*.dep2' -not -path "./installed_libraries/*" -exec rm -vf {} +
 	CLEAN=false
 fi
 
@@ -169,10 +168,10 @@ then
 	if [ ! -z "$toclean" ] ; then
 		for filename in ${toclean[@]}
 		do
-			if [ -z $filename ]; then 
+			if [ -z $filename ]; then
 				exit
 			fi
-			
+
 			find . -type f -name $filename.o -exec rm -vf {} +
 			find . -type f -name $filename.dep -exec rm -vf {} +
 			find . -type f -name $filename.dep2 -exec rm -vf {} +
@@ -257,7 +256,7 @@ if $COLLECT ; then
 	do
 		filename="${file:-8}"
 		filename="${filename%.txt}"
-		
+
 		if [ "${#filename}" -lt 5 ] ; then
 			oName=$(sed '2!d' $file)
 			echo "$file;$oName"
@@ -274,10 +273,10 @@ if $TRANSLATE ; then
 		IFS=';' read ADDR1 ADDR2 <<< $line
 		filename=$ADDR1
 		content=$ADDR2
-		
+
 		echo $ADDR1
 		echo $ADDR2
-		
+
 		sed -i "2 c $content" $filename
 	done < ../input.txt
 	cd $workdir

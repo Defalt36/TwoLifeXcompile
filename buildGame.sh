@@ -2,17 +2,19 @@
 #
 # Original by risvh
 
-locationsfile="exclude-dir/locations.txt"
+workdir=".."
+buildsdir="builds"
+toclean=('LivingLifePage' 'server' 'game')
+gamedir="../OneLife/gameSource"
+if [ -f "settings.txt" ] ; then
+	echo lol
+	settingsfile="settings.txt"
+	workdir=$(sed '1!d' $settingsfile)
+	workdir="${workdir:8}"
 
-if [ -f "locations.txt" ] ; then
-	locationsfile="locations.txt"
+	buildsdir=$(sed '2!d' $settingsfile)
+	buildsdir="${buildsdir:10}"
 fi
-
-workdir=$(sed '1!d' $locationsfile)
-workdir="${workdir:8}"
-
-buildsdir=$(sed '2!d' $locationsfile)
-buildsdir="${buildsdir:10}"
 
 pack=false
 for arg in "$@"
@@ -41,13 +43,13 @@ cd $outputFolder
 echo
 echo "Gathering game assets..."
 for f in animations categories ground music objects sounds sprites transitions dataVersionNumber.txt; do
-    
+
 	#Create sym link only
 	# ln -s ../OneLifeData7/$f .
-	
+
 	#Copy from OneLifeData7 repo
 	cp -RL -v ../OneLifeData7/$f .
-	
+
 done
 echo "done."
 
