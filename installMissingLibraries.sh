@@ -8,16 +8,11 @@ if [ -f "settings.txt" ] ; then
 fi
 
 skipdefault=false
-sdl=false
 freetype=false
 
 for arg in "$@"
 do
     case $arg in
-        --sdl)
-		sdl=true
-		skipdefault=true
-		shift
         ;;
 		--freetype)
 		freetype=true
@@ -78,7 +73,7 @@ then
 	mv libpng-1.6.37 installed_libraries/libpng-1.6.37_source
 fi
 
-if [ "$sdl" = true ]
+if [ "$skipdefault" = false ]
 then
 	echo
 	echo "Preparing LibSDL..."

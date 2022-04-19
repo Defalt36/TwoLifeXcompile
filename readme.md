@@ -93,12 +93,11 @@ should do this for you, but have in mind it will delete the game repositories yo
 previously cloned (if any).<br />
 Note that command will clone the minorGems, OneLife and OneLifeData7 repositories from the
 TwoHoursOneLife github account. To clone from other sources you can use:
-<code>./cloneAlternative.sh</code>. 
+<code>./cloneAlternative.sh</code>.
 </p>
 
 <p>
 After successfully cloning the game repositories to your work directory run:<br />
-<code>./getSDLforMingw.sh</code><br />
 <code>./applyLocalRequirements.sh</code><br />
 </p>
 
@@ -180,13 +179,6 @@ to your compiler for it to work. This script install the ones you need.
 </p>
 
 <p>
-<code>installMissingLibraries.sh --sdl</code><br />
-This will install sdl in your distribution instead.
-You can use the files optimized for this use present in exclude-dir.
-Originals are from: minorGems/game/plataforms/SDL
-</p>
-
-<p>
 <code>deleteAllServerFiles.sh</code><br />
 Did you forget to press control-c when exiting the server or you just want a fresh map? This script
 will send all your server files to oblivion, solving the problem.
@@ -199,14 +191,12 @@ Less destructive version of the above.
 
 <p>
 <code>buildLatestTHOL.sh</code><br />
-Will automatically build the lastest version of Two Hours One Life for you. Make sure to
-get SDL before running.
+Will automatically build the lastest version of Two Hours One Life for you.
 </p>
 
 <p>
 <code>buildLatestOHOL.sh</code><br />
-Will automatically build the lastest version of One Hour One Life for you. Make sure to
-get SDL before running.
+Will automatically build the lastest version of One Hour One Life for you.
 </p>
 
 <p>
@@ -217,7 +207,7 @@ read next section.
 <p>
 <code>buildTestSystem.sh</code><br />
 This will clone missing repositories if any and build a test system for experimenting with
-the game. As the preceding you need SDL before running this.
+the game.
 </p>
 
 <p>
