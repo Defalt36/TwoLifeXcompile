@@ -52,6 +52,7 @@ echo 1 > settings/useCustomServer.ini
 echo localhost > settings/CustomServerAddress.ini
 echo 8005 > settings/customServerPort.ini
 echo 1 > settings/vogModeOn.ini
+echo 1 > settings/tutorialDone.ini
 
 echo; echo "Building editor..."
 sh ./makeEditorFixed.sh #fix for the original makeEditor.sh
