@@ -51,6 +51,7 @@ echo "done compiling."
 echo 1 > settings/useCustomServer.ini
 echo localhost > settings/CustomServerAddress.ini
 echo 8005 > settings/customServerPort.ini
+echo 1 > settings/vogModeOn.ini
 
 echo; echo "Building editor..."
 sh ./makeEditorFixed.sh #fix for the original makeEditor.sh
@@ -75,5 +76,8 @@ cmd.exe /c createSymlinksForServer.bat
 
 echo 0 > settings/requireTicketServerCheck.ini
 echo 1 > settings/forceEveLocation.ini
+echo 1 > settings/useTestMap.ini
+echo 1 > settings/allowVOGMode.ini
+echo 1 > settings/allowMapRequests.ini
 
 echo; echo "done :)"
