@@ -99,7 +99,6 @@ TwoHoursOneLife github account. To clone from other sources you can use:
 <p>
 After successfully cloning the game repositories to your work directory run:<br />
 <code>./getSDLforMingw.sh</code><br />
-<code>./fixStuff.sh</code><br />
 <code>./applyLocalRequirements.sh</code><br />
 </p>
 
@@ -167,13 +166,6 @@ https://onehouronelife.com/forums/viewtopic.php?id=1438
 When you run ./applyLocalRequirements.sh some files from TwoLifeXcompile will be copied to
 the game folders with the sole exception being the files listed here. The folder exclude-dir
 and some files you may use are included for your convenience.
-</p>
-
-<p>
-<code>fixStuff.sh</code><br />
-The next script fix some paths in the game repositories that prevent you from compiling
-the game components. Alternatively you could create symlinks for correct paths in your
-system, but if you want to keep it simple, just run it.
 </p>
 
 <p>
