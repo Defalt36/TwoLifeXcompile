@@ -17,6 +17,8 @@ sudo apt-get install git
 
 git clone https://github.com/Defalt36/TwoLifeXcompile.git
 
+chmod -R +x TwoLifeXcompile
+
 cd TwoLifeXcompile
 
 ./getBasics.sh
