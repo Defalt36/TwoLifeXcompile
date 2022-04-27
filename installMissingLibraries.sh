@@ -13,7 +13,6 @@ freetype=false
 for arg in "$@"
 do
     case $arg in
-        ;;
 		--freetype)
 		freetype=true
 		skipdefault=true
