@@ -29,7 +29,7 @@ store. Open it and define a user and password.<br />
 <h2>Do I have to read all of the following? This stuff is boring, why can't I just build the game?</h2>
 <p>
 I got you, fam. Run this from wsl: <br />
-<code>wget https://raw.githubusercontent.com/Defalt36/TwoLifeXcompile/master/doEverything.sh;./doEverything.sh</code>
+<code>wget https://raw.githubusercontent.com/Defalt36/TwoLifeXcompile/master/doEverything.sh;chmod +x doEverything.sh;sudo ./doEverything.sh</code>
 </p>
 
 <h2>Preparing Your Work Directory</h2>
