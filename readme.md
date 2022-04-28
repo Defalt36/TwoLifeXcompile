@@ -1,3 +1,4 @@
+<h2><a href="https://github.com/Defalt36/XLifeAssistant">THIS PROJECT IS ARCHIVED IN FAVOUR OF THIS.</a></h2>
 
 <p><img alt="Friendly Advice" title="" src="exclude-dir/cover.png" /></p>
 
